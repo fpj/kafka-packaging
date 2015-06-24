@@ -29,7 +29,7 @@ In your copy of this `kafka-packaging` repository, make sure you have the
 `upstream` remote which contains the Kafka source, including tags.
 
     $ cd kafka-packaging.git
-    $ git remote add upstream upstream http://git-wip-us.apache.org/repos/asf/kafka.git
+    $ git remote add upstream http://git-wip-us.apache.org/repos/asf/kafka.git
     $ git fetch upstream
 
 Now start a branch for the version you want to release, starting it from the
