@@ -1,24 +1,24 @@
 diff --git a/bin/kafka-run-class b/bin/kafka-run-class
-index 36c742b..5a01bb6 100755
+index 43a4cd2..05d9005 100755
 --- a/bin/kafka-run-class
 +++ b/bin/kafka-run-class
-@@ -88,7 +88,13 @@ fi
- 
+@@ -114,7 +114,13 @@ fi
  # Log4j settings
  if [ -z "$KAFKA_LOG4J_OPTS" ]; then
+   # Log to console. This is a tool.
 -  KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/config/tools-log4j.properties"
 +  if [ -e "/etc/kafka/tools-log4j.properties" ]; then # Normal install layout
 +    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:/etc/kafka/tools-log4j.properties"
 +  elif [ -e "$base_dir/etc/kafka/tools-log4j.properties" ]; then # Simple zip file layout
 +    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/etc/kafka/tools-log4j.properties"
 +  else # Fallback to normal default
-+    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/config/tools-log4j.properties"
++    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/tools-log4j.properties"
 +  fi
- fi
- 
- KAFKA_LOG4J_OPTS="-Dkafka.logs.dir=$LOG_DIR $KAFKA_LOG4J_OPTS"
+ else
+   # create logs directory
+   if [ ! -d "$LOG_DIR" ]; then
 diff --git a/bin/kafka-server-start b/bin/kafka-server-start
-index 1737d0c..9c11509 100755
+index dc01d46..70c8a81 100755
 --- a/bin/kafka-server-start
 +++ b/bin/kafka-server-start
 @@ -22,7 +22,13 @@ fi
@@ -31,13 +31,13 @@ index 1737d0c..9c11509 100755
 +  elif [ -e "$base_dir/../etc/kafka/log4j.properties" ]; then # Simple zip file layout
 +    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../etc/kafka/log4j.properties"
 +  else # Fallback to normal default
-+    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/config/log4j.properties"
++    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"
 +  fi
  fi
  
  if [ "x$KAFKA_HEAP_OPTS" = "x" ]; then
 diff --git a/bin/windows/kafka-run-class.bat b/bin/windows/kafka-run-class.bat
-index 8e9780e..19ff98d 100644
+index f5b8faa..604a11d 100644
 --- a/bin/windows/kafka-run-class.bat
 +++ b/bin/windows/kafka-run-class.bat
 @@ -87,7 +87,11 @@ IF ["%JMX_PORT%"] NEQ [""] (
@@ -71,15 +71,14 @@ index 6a5aa9f..ae56b48 100644
  %~dp0kafka-run-class.bat kafka.Kafka %*
  EndLocal
 diff --git a/bin/windows/zookeeper-server-start.bat b/bin/windows/zookeeper-server-start.bat
-index 9836283..c70f3c4 100644
+index 9836283..9a31936 100644
 --- a/bin/windows/zookeeper-server-start.bat
 +++ b/bin/windows/zookeeper-server-start.bat
-@@ -20,7 +20,12 @@ IF [%1] EQU [] (
+@@ -20,7 +20,11 @@ IF [%1] EQU [] (
  )
  
  SetLocal
 -set KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:%~dp0../../config/log4j.properties
-+
 +if exists %~dp0../../etc/kafka/log4j.properties (
 +	set KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:%~dp0../../etc/kafka/log4j.properties
 +) else (
@@ -89,7 +88,7 @@ index 9836283..c70f3c4 100644
  %~dp0kafka-run-class.bat org.apache.zookeeper.server.quorum.QuorumPeerMain %*
  EndLocal
 diff --git a/bin/zookeeper-server-start b/bin/zookeeper-server-start
-index d968786..d47a635 100755
+index d968786..d0cf14e 100755
 --- a/bin/zookeeper-server-start
 +++ b/bin/zookeeper-server-start
 @@ -22,7 +22,13 @@ fi
@@ -102,7 +101,7 @@ index d968786..d47a635 100755
 +  elif [ -e "$base_dir/../etc/kafka/log4j.properties" ]; then # Simple zip file layout
 +    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../etc/kafka/log4j.properties"
 +  else # Fallback to normal default
-+    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/config/log4j.properties"
++    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"
 +  fi
  fi
  
