@@ -1,8 +1,8 @@
 diff --git a/config/server.properties b/config/server.properties
-index b0e4496..5101af3 100644
+index 80ee2fc..8595ec8 100644
 --- a/config/server.properties
 +++ b/config/server.properties
-@@ -55,7 +55,7 @@ socket.request.max.bytes=104857600
+@@ -57,7 +57,7 @@ socket.request.max.bytes=104857600
  ############################# Log Basics #############################
  
  # A comma seperated list of directories under which to store log files
@@ -12,7 +12,7 @@ index b0e4496..5101af3 100644
  # The default number of log partitions per topic. More partitions allow greater
  # parallelism for consumption, but this will also result in more files across
 diff --git a/config/zookeeper.properties b/config/zookeeper.properties
-index 74cbf90..1a4eb06 100644
+index 74cbf90..3ae7169 100644
 --- a/config/zookeeper.properties
 +++ b/config/zookeeper.properties
 @@ -13,7 +13,7 @@
