@@ -1,13 +1,13 @@
 diff --git a/bin/kafka-run-class b/bin/kafka-run-class
-index 36c742b..aad8e97 100755
+index 7e58ac3..43a4cd2 100755
 --- a/bin/kafka-run-class
 +++ b/bin/kafka-run-class
-@@ -24,7 +24,7 @@ base_dir=$(dirname $0)/..
+@@ -108,7 +108,7 @@ fi
  
- # create logs directory
+ # Log directory to use
  if [ "x$LOG_DIR" = "x" ]; then
 -    LOG_DIR="$base_dir/logs"
 +    LOG_DIR="/var/log/kafka"
  fi
  
- if [ ! -d "$LOG_DIR" ]; then
+ # Log4j settings
