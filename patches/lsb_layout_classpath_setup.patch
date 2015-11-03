@@ -1,8 +1,8 @@
-diff --git a/bin/kafka-run-class.sh b/bin/kafka-run-class.sh
-index 36c742b..8c6991e 100755
+diff --git a/bin/kafka-run-class b/bin/kafka-run-class
+index d98533d..7e58ac3 100755
 --- a/bin/kafka-run-class
 +++ b/bin/kafka-run-class
-@@ -71,6 +71,12 @@ do
+@@ -85,6 +85,12 @@ do
    CLASSPATH=$CLASSPATH:$file
  done
  
