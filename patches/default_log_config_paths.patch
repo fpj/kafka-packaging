@@ -1,8 +1,8 @@
 diff --git a/bin/kafka-run-class b/bin/kafka-run-class
-index 43a4cd2..05d9005 100755
+index 48430b4..8c999f6 100755
 --- a/bin/kafka-run-class
 +++ b/bin/kafka-run-class
-@@ -114,7 +114,13 @@ fi
+@@ -113,7 +113,13 @@ fi
  # Log4j settings
  if [ -z "$KAFKA_LOG4J_OPTS" ]; then
    # Log to console. This is a tool.
@@ -37,7 +37,7 @@ index dc01d46..70c8a81 100755
  
  if [ "x$KAFKA_HEAP_OPTS" = "x" ]; then
 diff --git a/bin/windows/kafka-run-class.bat b/bin/windows/kafka-run-class.bat
-index f5b8faa..604a11d 100644
+index f5b8faa..64dc42f 100644
 --- a/bin/windows/kafka-run-class.bat
 +++ b/bin/windows/kafka-run-class.bat
 @@ -87,7 +87,11 @@ IF ["%JMX_PORT%"] NEQ [""] (
@@ -48,7 +48,7 @@ index f5b8faa..604a11d 100644
 +	if exists %~dp0../../etc/kafka/tools-log4j.properties (
 +		set KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:%~dp0../../etc/kafka/tools-log4j.properties
 +	) else (
-+		set KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:%~dp0../../config/tools-log4j.properties
++		set KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:%BASE_DIR%/config/tools-log4j.properties
 +	)
  )
  
