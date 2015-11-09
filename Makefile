@@ -137,10 +137,13 @@ ifeq ($(APPLY_PATCHES),yes)
 	cat patches/series | xargs -IPATCH bash -c 'patch -p1 < patches/PATCH'
 endif
 
+# Note: We skip signing here because, when deploying artifacts (in a later packaging step),
+#       we will actually perform the signing.  Skipping the signing here also means we do not
+#       need to have the credentials etc. configured at this point in the packaging pipeline.
 kafka: gradle apply-patches
 	$(GRADLE) -PscalaVersion=$(SCALA_VERSION)
-	./gradlew -PscalaVersion=$(SCALA_VERSION) install
-	./gradlew -PscalaVersion=$(SCALA_VERSION) releaseTarGz_$(SCALA_VERSION_UNDERSCORE)
+	./gradlew -Dorg.gradle.project.skipSigning=true -PscalaVersion=$(SCALA_VERSION) install
+	./gradlew -Dorg.gradle.project.skipSigning=true -PscalaVersion=$(SCALA_VERSION) releaseTarGz_$(SCALA_VERSION_UNDERSCORE)
 
 # create_archive gets the
 install: kafka
