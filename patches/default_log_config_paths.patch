@@ -1,35 +1,81 @@
+diff --git a/bin/connect-distributed b/bin/connect-distributed
+index d9f6325..80d3a8c 100755
+--- a/bin/connect-distributed
++++ b/bin/connect-distributed
+@@ -17,7 +17,15 @@
+ base_dir=$(dirname $0)
+ 
+ if [ "x$KAFKA_LOG4J_OPTS" = "x" ]; then
+-    export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/connect-log4j.properties"
++  LOG4J_CONFIG_NORMAL_INSTALL="/etc/kafka/connect-log4j.properties"
++  LOG4J_CONFIG_ZIP_INSTALL="$base_dir/../etc/kafka/connect-log4j.properties"
++  if [ -e "$LOG4J_CONFIG_NORMAL_INSTALL" ]; then # Normal install layout
++    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:${LOG4J_CONFIG_NORMAL_INSTALL}"
++  elif [ -e "${LOG4J_CONFIG_ZIP_INSTALL}" ]; then # Simple zip file layout
++    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:${LOG4J_CONFIG_ZIP_INSTALL}"
++  else # Fallback to normal default
++    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/connect-log4j.properties"
++  fi
+ fi
+ 
+ exec $(dirname $0)/kafka-run-class.sh org.apache.kafka.connect.cli.ConnectDistributed "$@"
+diff --git a/bin/connect-standalone b/bin/connect-standalone
+index a14df86..040bc79 100755
+--- a/bin/connect-standalone
++++ b/bin/connect-standalone
+@@ -17,7 +17,15 @@
+ base_dir=$(dirname $0)
+ 
+ if [ "x$KAFKA_LOG4J_OPTS" = "x" ]; then
+-    export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/connect-log4j.properties"
++  LOG4J_CONFIG_NORMAL_INSTALL="/etc/kafka/connect-log4j.properties"
++  LOG4J_CONFIG_ZIP_INSTALL="$base_dir/../etc/kafka/connect-log4j.properties"
++  if [ -e "$LOG4J_CONFIG_NORMAL_INSTALL" ]; then # Normal install layout
++    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:${LOG4J_CONFIG_NORMAL_INSTALL}"
++  elif [ -e "${LOG4J_CONFIG_ZIP_INSTALL}" ]; then # Simple zip file layout
++    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:${LOG4J_CONFIG_ZIP_INSTALL}"
++  else # Fallback to normal default
++    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/connect-log4j.properties"
++  fi
+ fi
+ 
+ exec $(dirname $0)/kafka-run-class.sh org.apache.kafka.connect.cli.ConnectStandalone "$@"
 diff --git a/bin/kafka-run-class b/bin/kafka-run-class
-index 48430b4..8c999f6 100755
+index b2e7f13..8bdc532 100755
 --- a/bin/kafka-run-class
 +++ b/bin/kafka-run-class
-@@ -113,7 +113,13 @@ fi
+@@ -113,7 +113,15 @@ fi
  # Log4j settings
  if [ -z "$KAFKA_LOG4J_OPTS" ]; then
    # Log to console. This is a tool.
 -  KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/config/tools-log4j.properties"
-+  if [ -e "/etc/kafka/tools-log4j.properties" ]; then # Normal install layout
-+    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:/etc/kafka/tools-log4j.properties"
-+  elif [ -e "$base_dir/etc/kafka/tools-log4j.properties" ]; then # Simple zip file layout
-+    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/etc/kafka/tools-log4j.properties"
++  LOG4J_CONFIG_NORMAL_INSTALL="/etc/kafka/tools-log4j.properties"
++  LOG4J_CONFIG_ZIP_INSTALL="$base_dir/etc/kafka/tools-log4j.properties"
++  if [ -e "$LOG4J_CONFIG_NORMAL_INSTALL" ]; then # Normal install layout
++    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:${LOG4J_CONFIG_NORMAL_INSTALL}"
++  elif [ -e "${LOG4J_CONFIG_ZIP_INSTALL}" ]; then # Simple zip file layout
++    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:${LOG4J_CONFIG_ZIP_INSTALL}"
 +  else # Fallback to normal default
-+    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/tools-log4j.properties"
++    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/config/tools-log4j.properties"
 +  fi
  else
    # create logs directory
    if [ ! -d "$LOG_DIR" ]; then
 diff --git a/bin/kafka-server-start b/bin/kafka-server-start
-index dc01d46..70c8a81 100755
+index dc01d46..4f3ddea 100755
 --- a/bin/kafka-server-start
 +++ b/bin/kafka-server-start
-@@ -22,7 +22,13 @@ fi
+@@ -22,7 +22,15 @@ fi
  base_dir=$(dirname $0)
  
  if [ "x$KAFKA_LOG4J_OPTS" = "x" ]; then
 -    export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"
-+  if [ -e "/etc/kafka/log4j.properties" ]; then # Normal install layout
-+    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:/etc/kafka/log4j.properties"
-+  elif [ -e "$base_dir/../etc/kafka/log4j.properties" ]; then # Simple zip file layout
-+    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../etc/kafka/log4j.properties"
++  LOG4J_CONFIG_NORMAL_INSTALL="/etc/kafka/log4j.properties"
++  LOG4J_CONFIG_ZIP_INSTALL="$base_dir/../etc/kafka/log4j.properties"
++  if [ -e "$LOG4J_CONFIG_NORMAL_INSTALL" ]; then # Normal install layout
++    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:${LOG4J_CONFIG_NORMAL_INSTALL}"
++  elif [ -e "${LOG4J_CONFIG_ZIP_INSTALL}" ]; then # Simple zip file layout
++    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:${LOG4J_CONFIG_ZIP_INSTALL}"
 +  else # Fallback to normal default
 +    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"
 +  fi
@@ -88,18 +134,20 @@ index 9836283..9a31936 100644
  %~dp0kafka-run-class.bat org.apache.zookeeper.server.quorum.QuorumPeerMain %*
  EndLocal
 diff --git a/bin/zookeeper-server-start b/bin/zookeeper-server-start
-index d968786..d0cf14e 100755
+index d968786..1770cc0 100755
 --- a/bin/zookeeper-server-start
 +++ b/bin/zookeeper-server-start
-@@ -22,7 +22,13 @@ fi
+@@ -22,7 +22,15 @@ fi
  base_dir=$(dirname $0)
  
  if [ "x$KAFKA_LOG4J_OPTS" = "x" ]; then
 -    export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"
-+  if [ -e "/etc/kafka/log4j.properties" ]; then # Normal install layout
-+    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:/etc/kafka/log4j.properties"
-+  elif [ -e "$base_dir/../etc/kafka/log4j.properties" ]; then # Simple zip file layout
-+    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../etc/kafka/log4j.properties"
++  LOG4J_CONFIG_NORMAL_INSTALL="/etc/kafka/log4j.properties"
++  LOG4J_CONFIG_ZIP_INSTALL="$base_dir/../etc/kafka/log4j.properties"
++  if [ -e "$LOG4J_CONFIG_NORMAL_INSTALL" ]; then # Normal install layout
++    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:${LOG4J_CONFIG_NORMAL_INSTALL}"
++  elif [ -e "${LOG4J_CONFIG_ZIP_INSTALL}" ]; then # Simple zip file layout
++    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:${LOG4J_CONFIG_ZIP_INSTALL}"
 +  else # Fallback to normal default
 +    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"
 +  fi
