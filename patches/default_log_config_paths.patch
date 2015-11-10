@@ -1,5 +1,5 @@
 diff --git a/bin/connect-distributed b/bin/connect-distributed
-index d9f6325..80d3a8c 100755
+index 354c3cc..1e72ed4 100755
 --- a/bin/connect-distributed
 +++ b/bin/connect-distributed
 @@ -17,7 +17,15 @@
@@ -18,9 +18,9 @@ index d9f6325..80d3a8c 100755
 +  fi
  fi
  
- exec $(dirname $0)/kafka-run-class.sh org.apache.kafka.connect.cli.ConnectDistributed "$@"
+ exec $(dirname $0)/kafka-run-class org.apache.kafka.connect.cli.ConnectDistributed "$@"
 diff --git a/bin/connect-standalone b/bin/connect-standalone
-index a14df86..040bc79 100755
+index 85904f7..b30293d 100755
 --- a/bin/connect-standalone
 +++ b/bin/connect-standalone
 @@ -17,7 +17,15 @@
@@ -39,7 +39,7 @@ index a14df86..040bc79 100755
 +  fi
  fi
  
- exec $(dirname $0)/kafka-run-class.sh org.apache.kafka.connect.cli.ConnectStandalone "$@"
+ exec $(dirname $0)/kafka-run-class org.apache.kafka.connect.cli.ConnectStandalone "$@"
 diff --git a/bin/kafka-run-class b/bin/kafka-run-class
 index 1fb4eff..10dee75 100755
 --- a/bin/kafka-run-class
@@ -62,7 +62,7 @@ index 1fb4eff..10dee75 100755
    # create logs directory
    if [ ! -d "$LOG_DIR" ]; then
 diff --git a/bin/kafka-server-start b/bin/kafka-server-start
-index dc01d46..4f3ddea 100755
+index e74a0ae..acfbf15 100755
 --- a/bin/kafka-server-start
 +++ b/bin/kafka-server-start
 @@ -22,7 +22,15 @@ fi
@@ -134,7 +134,7 @@ index 9836283..9a31936 100644
  %~dp0kafka-run-class.bat org.apache.zookeeper.server.quorum.QuorumPeerMain %*
  EndLocal
 diff --git a/bin/zookeeper-server-start b/bin/zookeeper-server-start
-index d968786..1770cc0 100755
+index fbbc8f6..8d6bcfa 100755
 --- a/bin/zookeeper-server-start
 +++ b/bin/zookeeper-server-start
 @@ -22,7 +22,15 @@ fi
