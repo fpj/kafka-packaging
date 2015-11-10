@@ -1,6 +1,6 @@
 diff --git a/bin/connect-distributed b/bin/connect-distributed
 new file mode 100755
-index 0000000..d9f6325
+index 0000000..354c3cc
 --- /dev/null
 +++ b/bin/connect-distributed
 @@ -0,0 +1,23 @@
@@ -26,7 +26,7 @@ index 0000000..d9f6325
 +    export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/connect-log4j.properties"
 +fi
 +
-+exec $(dirname $0)/kafka-run-class.sh org.apache.kafka.connect.cli.ConnectDistributed "$@"
++exec $(dirname $0)/kafka-run-class org.apache.kafka.connect.cli.ConnectDistributed "$@"
 diff --git a/bin/connect-distributed.sh b/bin/connect-distributed.sh
 deleted file mode 100755
 index d9f6325..0000000
@@ -58,7 +58,7 @@ index d9f6325..0000000
 -exec $(dirname $0)/kafka-run-class.sh org.apache.kafka.connect.cli.ConnectDistributed "$@"
 diff --git a/bin/connect-standalone b/bin/connect-standalone
 new file mode 100755
-index 0000000..a14df86
+index 0000000..85904f7
 --- /dev/null
 +++ b/bin/connect-standalone
 @@ -0,0 +1,23 @@
@@ -84,7 +84,7 @@ index 0000000..a14df86
 +    export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/connect-log4j.properties"
 +fi
 +
-+exec $(dirname $0)/kafka-run-class.sh org.apache.kafka.connect.cli.ConnectStandalone "$@"
++exec $(dirname $0)/kafka-run-class org.apache.kafka.connect.cli.ConnectStandalone "$@"
 diff --git a/bin/connect-standalone.sh b/bin/connect-standalone.sh
 deleted file mode 100755
 index a14df86..0000000
@@ -116,7 +116,7 @@ index a14df86..0000000
 -exec $(dirname $0)/kafka-run-class.sh org.apache.kafka.connect.cli.ConnectStandalone "$@"
 diff --git a/bin/kafka-acls b/bin/kafka-acls
 new file mode 100755
-index 0000000..fd0fb67
+index 0000000..c827a1e
 --- /dev/null
 +++ b/bin/kafka-acls
 @@ -0,0 +1,17 @@
@@ -136,7 +136,7 @@ index 0000000..fd0fb67
 +# See the License for the specific language governing permissions and
 +# limitations under the License.
 +
-+exec $(dirname $0)/kafka-run-class.sh kafka.admin.AclCommand $@
++exec $(dirname $0)/kafka-run-class kafka.admin.AclCommand $@
 diff --git a/bin/kafka-acls.sh b/bin/kafka-acls.sh
 deleted file mode 100755
 index fd0fb67..0000000
@@ -162,7 +162,7 @@ index fd0fb67..0000000
 -exec $(dirname $0)/kafka-run-class.sh kafka.admin.AclCommand $@
 diff --git a/bin/kafka-configs b/bin/kafka-configs
 new file mode 100755
-index 0000000..417eaf5
+index 0000000..6f7f48f
 --- /dev/null
 +++ b/bin/kafka-configs
 @@ -0,0 +1,17 @@
@@ -182,7 +182,7 @@ index 0000000..417eaf5
 +# See the License for the specific language governing permissions and
 +# limitations under the License.
 +
-+exec $(dirname $0)/kafka-run-class.sh kafka.admin.ConfigCommand $@
++exec $(dirname $0)/kafka-run-class kafka.admin.ConfigCommand $@
 diff --git a/bin/kafka-configs.sh b/bin/kafka-configs.sh
 deleted file mode 100755
 index 417eaf5..0000000
@@ -208,7 +208,7 @@ index 417eaf5..0000000
 -exec $(dirname $0)/kafka-run-class.sh kafka.admin.ConfigCommand $@
 diff --git a/bin/kafka-console-consumer b/bin/kafka-console-consumer
 new file mode 100755
-index 0000000..07c90a9
+index 0000000..7598186
 --- /dev/null
 +++ b/bin/kafka-console-consumer
 @@ -0,0 +1,21 @@
@@ -232,7 +232,7 @@ index 0000000..07c90a9
 +    export KAFKA_HEAP_OPTS="-Xmx512M"
 +fi
 +
-+exec $(dirname $0)/kafka-run-class.sh kafka.tools.ConsoleConsumer $@
++exec $(dirname $0)/kafka-run-class kafka.tools.ConsoleConsumer $@
 diff --git a/bin/kafka-console-consumer.sh b/bin/kafka-console-consumer.sh
 deleted file mode 100755
 index 07c90a9..0000000
@@ -262,7 +262,7 @@ index 07c90a9..0000000
 -exec $(dirname $0)/kafka-run-class.sh kafka.tools.ConsoleConsumer $@
 diff --git a/bin/kafka-console-producer b/bin/kafka-console-producer
 new file mode 100755
-index 0000000..ccca66d
+index 0000000..d4c28b0
 --- /dev/null
 +++ b/bin/kafka-console-producer
 @@ -0,0 +1,20 @@
@@ -285,7 +285,7 @@ index 0000000..ccca66d
 +if [ "x$KAFKA_HEAP_OPTS" = "x" ]; then
 +    export KAFKA_HEAP_OPTS="-Xmx512M"
 +fi
-+exec $(dirname $0)/kafka-run-class.sh kafka.tools.ConsoleProducer $@
++exec $(dirname $0)/kafka-run-class kafka.tools.ConsoleProducer $@
 diff --git a/bin/kafka-console-producer.sh b/bin/kafka-console-producer.sh
 deleted file mode 100755
 index ccca66d..0000000
@@ -314,7 +314,7 @@ index ccca66d..0000000
 -exec $(dirname $0)/kafka-run-class.sh kafka.tools.ConsoleProducer $@
 diff --git a/bin/kafka-consumer-groups b/bin/kafka-consumer-groups
 new file mode 100755
-index 0000000..f4786db
+index 0000000..d274893
 --- /dev/null
 +++ b/bin/kafka-consumer-groups
 @@ -0,0 +1,17 @@
@@ -334,7 +334,7 @@ index 0000000..f4786db
 +# See the License for the specific language governing permissions and
 +# limitations under the License.
 +
-+exec $(dirname $0)/kafka-run-class.sh kafka.admin.ConsumerGroupCommand $@
++exec $(dirname $0)/kafka-run-class kafka.admin.ConsumerGroupCommand $@
 diff --git a/bin/kafka-consumer-groups.sh b/bin/kafka-consumer-groups.sh
 deleted file mode 100755
 index f4786db..0000000
@@ -360,7 +360,7 @@ index f4786db..0000000
 -exec $(dirname $0)/kafka-run-class.sh kafka.admin.ConsumerGroupCommand $@
 diff --git a/bin/kafka-consumer-offset-checker b/bin/kafka-consumer-offset-checker
 new file mode 100755
-index 0000000..c275f7e
+index 0000000..0384da1
 --- /dev/null
 +++ b/bin/kafka-consumer-offset-checker
 @@ -0,0 +1,17 @@
@@ -380,7 +380,7 @@ index 0000000..c275f7e
 +# See the License for the specific language governing permissions and
 +# limitations under the License.
 +
-+exec $(dirname $0)/kafka-run-class.sh kafka.tools.ConsumerOffsetChecker $@
++exec $(dirname $0)/kafka-run-class kafka.tools.ConsumerOffsetChecker $@
 diff --git a/bin/kafka-consumer-offset-checker.sh b/bin/kafka-consumer-offset-checker.sh
 deleted file mode 100755
 index c275f7e..0000000
@@ -406,7 +406,7 @@ index c275f7e..0000000
 -exec $(dirname $0)/kafka-run-class.sh kafka.tools.ConsumerOffsetChecker $@
 diff --git a/bin/kafka-consumer-perf-test b/bin/kafka-consumer-perf-test
 new file mode 100755
-index 0000000..ebc513a
+index 0000000..3aaf70f
 --- /dev/null
 +++ b/bin/kafka-consumer-perf-test
 @@ -0,0 +1,20 @@
@@ -429,7 +429,7 @@ index 0000000..ebc513a
 +if [ "x$KAFKA_HEAP_OPTS" = "x" ]; then
 +    export KAFKA_HEAP_OPTS="-Xmx512M"
 +fi
-+exec $(dirname $0)/kafka-run-class.sh kafka.tools.ConsumerPerformance $@
++exec $(dirname $0)/kafka-run-class kafka.tools.ConsumerPerformance $@
 diff --git a/bin/kafka-consumer-perf-test.sh b/bin/kafka-consumer-perf-test.sh
 deleted file mode 100755
 index ebc513a..0000000
@@ -458,7 +458,7 @@ index ebc513a..0000000
 -exec $(dirname $0)/kafka-run-class.sh kafka.tools.ConsumerPerformance $@
 diff --git a/bin/kafka-mirror-maker b/bin/kafka-mirror-maker
 new file mode 100755
-index 0000000..56e342c
+index 0000000..74f0790
 --- /dev/null
 +++ b/bin/kafka-mirror-maker
 @@ -0,0 +1,17 @@
@@ -478,7 +478,7 @@ index 0000000..56e342c
 +# See the License for the specific language governing permissions and
 +# limitations under the License.
 +
-+exec $(dirname $0)/kafka-run-class.sh kafka.tools.MirrorMaker $@
++exec $(dirname $0)/kafka-run-class kafka.tools.MirrorMaker $@
 diff --git a/bin/kafka-mirror-maker.sh b/bin/kafka-mirror-maker.sh
 deleted file mode 100755
 index 56e342c..0000000
@@ -504,7 +504,7 @@ index 56e342c..0000000
 -exec $(dirname $0)/kafka-run-class.sh kafka.tools.MirrorMaker $@
 diff --git a/bin/kafka-preferred-replica-election b/bin/kafka-preferred-replica-election
 new file mode 100755
-index 0000000..ed167c2
+index 0000000..a51b65b
 --- /dev/null
 +++ b/bin/kafka-preferred-replica-election
 @@ -0,0 +1,17 @@
@@ -524,7 +524,7 @@ index 0000000..ed167c2
 +# See the License for the specific language governing permissions and
 +# limitations under the License.
 +
-+exec $(dirname $0)/kafka-run-class.sh kafka.admin.PreferredReplicaLeaderElectionCommand $@
++exec $(dirname $0)/kafka-run-class kafka.admin.PreferredReplicaLeaderElectionCommand $@
 diff --git a/bin/kafka-preferred-replica-election.sh b/bin/kafka-preferred-replica-election.sh
 deleted file mode 100755
 index ed167c2..0000000
@@ -550,7 +550,7 @@ index ed167c2..0000000
 -exec $(dirname $0)/kafka-run-class.sh kafka.admin.PreferredReplicaLeaderElectionCommand $@
 diff --git a/bin/kafka-producer-perf-test b/bin/kafka-producer-perf-test
 new file mode 100755
-index 0000000..f583662
+index 0000000..be8bf1d
 --- /dev/null
 +++ b/bin/kafka-producer-perf-test
 @@ -0,0 +1,20 @@
@@ -573,7 +573,7 @@ index 0000000..f583662
 +if [ "x$KAFKA_HEAP_OPTS" = "x" ]; then
 +    export KAFKA_HEAP_OPTS="-Xmx512M"
 +fi
-+exec $(dirname $0)/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance $@
++exec $(dirname $0)/kafka-run-class org.apache.kafka.tools.ProducerPerformance $@
 diff --git a/bin/kafka-producer-perf-test.sh b/bin/kafka-producer-perf-test.sh
 deleted file mode 100755
 index f583662..0000000
@@ -602,7 +602,7 @@ index f583662..0000000
 -exec $(dirname $0)/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance $@
 diff --git a/bin/kafka-reassign-partitions b/bin/kafka-reassign-partitions
 new file mode 100755
-index 0000000..95b4ae0
+index 0000000..3111b1c
 --- /dev/null
 +++ b/bin/kafka-reassign-partitions
 @@ -0,0 +1,17 @@
@@ -622,7 +622,7 @@ index 0000000..95b4ae0
 +# See the License for the specific language governing permissions and
 +# limitations under the License.
 +
-+exec $(dirname $0)/kafka-run-class.sh kafka.admin.ReassignPartitionsCommand $@
++exec $(dirname $0)/kafka-run-class kafka.admin.ReassignPartitionsCommand $@
 diff --git a/bin/kafka-reassign-partitions.sh b/bin/kafka-reassign-partitions.sh
 deleted file mode 100755
 index 95b4ae0..0000000
@@ -648,7 +648,7 @@ index 95b4ae0..0000000
 -exec $(dirname $0)/kafka-run-class.sh kafka.admin.ReassignPartitionsCommand $@
 diff --git a/bin/kafka-replay-log-producer b/bin/kafka-replay-log-producer
 new file mode 100755
-index 0000000..8e2e713
+index 0000000..9601f68
 --- /dev/null
 +++ b/bin/kafka-replay-log-producer
 @@ -0,0 +1,17 @@
@@ -668,7 +668,7 @@ index 0000000..8e2e713
 +# See the License for the specific language governing permissions and
 +# limitations under the License.
 +
-+exec $(dirname $0)/kafka-run-class.sh kafka.tools.ReplayLogProducer $@
++exec $(dirname $0)/kafka-run-class kafka.tools.ReplayLogProducer $@
 diff --git a/bin/kafka-replay-log-producer.sh b/bin/kafka-replay-log-producer.sh
 deleted file mode 100755
 index 8e2e713..0000000
@@ -694,7 +694,7 @@ index 8e2e713..0000000
 -exec $(dirname $0)/kafka-run-class.sh kafka.tools.ReplayLogProducer $@
 diff --git a/bin/kafka-replica-verification b/bin/kafka-replica-verification
 new file mode 100755
-index 0000000..ee6d19e
+index 0000000..b7d1182
 --- /dev/null
 +++ b/bin/kafka-replica-verification
 @@ -0,0 +1,17 @@
@@ -714,7 +714,7 @@ index 0000000..ee6d19e
 +# See the License for the specific language governing permissions and
 +# limitations under the License.
 +
-+exec $(dirname $0)/kafka-run-class.sh kafka.tools.ReplicaVerificationTool $@
++exec $(dirname $0)/kafka-run-class kafka.tools.ReplicaVerificationTool $@
 diff --git a/bin/kafka-replica-verification.sh b/bin/kafka-replica-verification.sh
 deleted file mode 100755
 index ee6d19e..0000000
@@ -1108,7 +1108,7 @@ index 88d575b..0000000
 -fi
 diff --git a/bin/kafka-server-start b/bin/kafka-server-start
 new file mode 100755
-index 0000000..dc01d46
+index 0000000..e74a0ae
 --- /dev/null
 +++ b/bin/kafka-server-start
 @@ -0,0 +1,44 @@
@@ -1155,7 +1155,7 @@ index 0000000..dc01d46
 +    ;;
 +esac
 +
-+exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka $@
++exec $base_dir/kafka-run-class $EXTRA_ARGS kafka.Kafka $@
 diff --git a/bin/kafka-server-start.sh b/bin/kafka-server-start.sh
 deleted file mode 100755
 index dc01d46..0000000
@@ -1252,7 +1252,7 @@ index cd8160c..0000000
 -ps ax | grep -i 'kafka\.Kafka' | grep java | grep -v grep | awk '{print $1}' | xargs kill -SIGTERM
 diff --git a/bin/kafka-simple-consumer-shell b/bin/kafka-simple-consumer-shell
 new file mode 100755
-index 0000000..9316f79
+index 0000000..12aab60
 --- /dev/null
 +++ b/bin/kafka-simple-consumer-shell
 @@ -0,0 +1,17 @@
@@ -1272,7 +1272,7 @@ index 0000000..9316f79
 +# See the License for the specific language governing permissions and
 +# limitations under the License.
 +
-+exec $(dirname $0)/kafka-run-class.sh kafka.tools.SimpleConsumerShell $@
++exec $(dirname $0)/kafka-run-class kafka.tools.SimpleConsumerShell $@
 diff --git a/bin/kafka-simple-consumer-shell.sh b/bin/kafka-simple-consumer-shell.sh
 deleted file mode 100755
 index 9316f79..0000000
@@ -1298,7 +1298,7 @@ index 9316f79..0000000
 -exec $(dirname $0)/kafka-run-class.sh kafka.tools.SimpleConsumerShell $@
 diff --git a/bin/kafka-topics b/bin/kafka-topics
 new file mode 100755
-index 0000000..b39b272
+index 0000000..aaa090a
 --- /dev/null
 +++ b/bin/kafka-topics
 @@ -0,0 +1,17 @@
@@ -1318,7 +1318,7 @@ index 0000000..b39b272
 +# See the License for the specific language governing permissions and
 +# limitations under the License.
 +
-+exec $(dirname $0)/kafka-run-class.sh kafka.admin.TopicCommand $@
++exec $(dirname $0)/kafka-run-class kafka.admin.TopicCommand $@
 diff --git a/bin/kafka-topics.sh b/bin/kafka-topics.sh
 deleted file mode 100755
 index b39b272..0000000
@@ -1344,7 +1344,7 @@ index b39b272..0000000
 -exec $(dirname $0)/kafka-run-class.sh kafka.admin.TopicCommand $@
 diff --git a/bin/kafka-verifiable-consumer b/bin/kafka-verifiable-consumer
 new file mode 100755
-index 0000000..fae064e
+index 0000000..2ef7e06
 --- /dev/null
 +++ b/bin/kafka-verifiable-consumer
 @@ -0,0 +1,20 @@
@@ -1367,7 +1367,7 @@ index 0000000..fae064e
 +if [ "x$KAFKA_HEAP_OPTS" = "x" ]; then
 +    export KAFKA_HEAP_OPTS="-Xmx512M"
 +fi
-+exec $(dirname $0)/kafka-run-class.sh org.apache.kafka.tools.VerifiableConsumer $@
++exec $(dirname $0)/kafka-run-class org.apache.kafka.tools.VerifiableConsumer $@
 diff --git a/bin/kafka-verifiable-consumer.sh b/bin/kafka-verifiable-consumer.sh
 deleted file mode 100755
 index fae064e..0000000
@@ -1396,7 +1396,7 @@ index fae064e..0000000
 -exec $(dirname $0)/kafka-run-class.sh org.apache.kafka.tools.VerifiableConsumer $@
 diff --git a/bin/kafka-verifiable-producer b/bin/kafka-verifiable-producer
 new file mode 100755
-index 0000000..98fe557
+index 0000000..d5f5916
 --- /dev/null
 +++ b/bin/kafka-verifiable-producer
 @@ -0,0 +1,20 @@
@@ -1419,7 +1419,7 @@ index 0000000..98fe557
 +if [ "x$KAFKA_HEAP_OPTS" = "x" ]; then
 +    export KAFKA_HEAP_OPTS="-Xmx512M"
 +fi
-+exec $(dirname $0)/kafka-run-class.sh org.apache.kafka.tools.VerifiableProducer $@
++exec $(dirname $0)/kafka-run-class org.apache.kafka.tools.VerifiableProducer $@
 diff --git a/bin/kafka-verifiable-producer.sh b/bin/kafka-verifiable-producer.sh
 deleted file mode 100755
 index 98fe557..0000000
@@ -1448,7 +1448,7 @@ index 98fe557..0000000
 -exec $(dirname $0)/kafka-run-class.sh org.apache.kafka.tools.VerifiableProducer $@
 diff --git a/bin/zookeeper-security-migration b/bin/zookeeper-security-migration
 new file mode 100755
-index 0000000..65fce85
+index 0000000..7b0d918
 --- /dev/null
 +++ b/bin/zookeeper-security-migration
 @@ -0,0 +1,17 @@
@@ -1468,7 +1468,7 @@ index 0000000..65fce85
 +# See the License for the specific language governing permissions and
 +# limitations under the License.
 +
-+exec $(dirname $0)/kafka-run-class.sh kafka.admin.ZkSecurityMigrator $@
++exec $(dirname $0)/kafka-run-class kafka.admin.ZkSecurityMigrator $@
 diff --git a/bin/zookeeper-security-migration.sh b/bin/zookeeper-security-migration.sh
 deleted file mode 100755
 index 65fce85..0000000
@@ -1494,7 +1494,7 @@ index 65fce85..0000000
 -exec $(dirname $0)/kafka-run-class.sh kafka.admin.ZkSecurityMigrator $@
 diff --git a/bin/zookeeper-server-start b/bin/zookeeper-server-start
 new file mode 100755
-index 0000000..d968786
+index 0000000..fbbc8f6
 --- /dev/null
 +++ b/bin/zookeeper-server-start
 @@ -0,0 +1,45 @@
@@ -1541,7 +1541,7 @@ index 0000000..d968786
 +     ;;
 +esac
 +
-+exec $base_dir/kafka-run-class.sh $EXTRA_ARGS org.apache.zookeeper.server.quorum.QuorumPeerMain $@
++exec $base_dir/kafka-run-class $EXTRA_ARGS org.apache.zookeeper.server.quorum.QuorumPeerMain $@
 +
 diff --git a/bin/zookeeper-server-start.sh b/bin/zookeeper-server-start.sh
 deleted file mode 100755
@@ -1640,7 +1640,7 @@ index 975d9ae..0000000
 -ps ax | grep -i 'zookeeper' | grep -v grep | awk '{print $1}' | xargs kill -SIGINT
 diff --git a/bin/zookeeper-shell b/bin/zookeeper-shell
 new file mode 100755
-index 0000000..95007fa
+index 0000000..6860532
 --- /dev/null
 +++ b/bin/zookeeper-shell
 @@ -0,0 +1,23 @@
@@ -1666,7 +1666,7 @@ index 0000000..95007fa
 +	exit 1
 +fi
 +
-+exec $(dirname $0)/kafka-run-class.sh org.apache.zookeeper.ZooKeeperMain -server "$@"
++exec $(dirname $0)/kafka-run-class org.apache.zookeeper.ZooKeeperMain -server "$@"
 diff --git a/bin/zookeeper-shell.sh b/bin/zookeeper-shell.sh
 deleted file mode 100755
 index 95007fa..0000000
