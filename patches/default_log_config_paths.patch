@@ -41,10 +41,10 @@ index a14df86..040bc79 100755
  
  exec $(dirname $0)/kafka-run-class.sh org.apache.kafka.connect.cli.ConnectStandalone "$@"
 diff --git a/bin/kafka-run-class b/bin/kafka-run-class
-index b2e7f13..8bdc532 100755
+index 1fb4eff..10dee75 100755
 --- a/bin/kafka-run-class
 +++ b/bin/kafka-run-class
-@@ -113,7 +113,15 @@ fi
+@@ -108,7 +108,15 @@ fi
  # Log4j settings
  if [ -z "$KAFKA_LOG4J_OPTS" ]; then
    # Log to console. This is a tool.
