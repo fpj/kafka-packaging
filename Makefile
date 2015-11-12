@@ -65,7 +65,7 @@ SCALA_VERSION=$(shell grep ext[.]scalaVersion scala.gradle | awk -F\' '{ print $
 endif
 SCALA_VERSION_UNDERSCORE=$(subst .,_,$(SCALA_VERSION))
 
-PACKAGE_NAME=confluent-kafka-$(VERSION)-$(SCALA_VERSION)
+export PACKAGE_NAME=confluent-kafka-$(VERSION)-$(SCALA_VERSION)
 
 
 # Defaults that are likely to vary by platform. These are cleanly separated so
@@ -73,8 +73,8 @@ PACKAGE_NAME=confluent-kafka-$(VERSION)-$(SCALA_VERSION)
 # when the values aren't overridden by the script invoking the Makefile
 DEFAULT_APPLY_PATCHES=yes
 DEFAULT_DESTDIR=$(CURDIR)/BUILD/
-DEFAULT_PREFIX=$(PACKAGE_NAME)
-DEFAULT_SYSCONFDIR=PREFIX/etc/kafka
+DEFAULT_PREFIX=/usr
+DEFAULT_SYSCONFDIR=/etc/kafka
 DEFAULT_INCLUDE_WINDOWS_BIN=yes
 
 
@@ -116,6 +116,9 @@ export DESTDIR
 export PREFIX
 export SYSCONFDIR
 export INCLUDE_WINDOWS_BIN
+export PS_PACKAGES
+export PS_CLIENT_PACKAGE
+export CONFLUENT_VERSION
 
 all: install
 
