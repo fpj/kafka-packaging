@@ -45,7 +45,7 @@ for PS_PKG in $PS_PACKAGES; do
   mvn clean install package
   popd
 done
-for jardir in "$BUILD_ROOT/$PS_CLIENT_PACKAGE/package/target/${PS_CLIENT_PACKAGE}-package-${CONFLUENT_VERSION}-package/share/java/*"; do
+for jardir in "$BUILDROOT/$PS_CLIENT_PACKAGE/package/target/${PS_CLIENT_PACKAGE}-package-${CONFLUENT_VERSION}-package/share/java/*"; do
   ${INSTALL} -o root -g root ${jardir}/* ${DESTDIR}${LIBPATH}/
 done
 
