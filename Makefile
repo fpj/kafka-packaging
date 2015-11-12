@@ -116,6 +116,9 @@ export DESTDIR
 export PREFIX
 export SYSCONFDIR
 export INCLUDE_WINDOWS_BIN
+export PS_PACKAGES
+export PS_CLIENT_PACKAGE
+export CONFLUENT_VERSION
 
 all: install
 

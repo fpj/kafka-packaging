@@ -5,8 +5,8 @@
 
 set -e
 
-if [ -z ${VERSION} -o -z ${SOURCE_VERSION} -o -z ${SCALA_VERSION} -o -z ${DESTDIR} ]; then
-    echo "VERSION, SOURCE_VERSION, SCALA_VERSION, and DESTDIR environment variables must be set."
+if [ -z "${VERSION}" -o -z "${SOURCE_VERSION}" -o -z "${SCALA_VERSION}" -o -z "${DESTDIR}" -o -z "${PS_PACKAGES}" -o -z "$PS_CLIENT_PACKAGE" -o -z "${CONFLUENT_VERSION}" ]; then
+    echo "VERSION, SOURCE_VERSION, SCALA_VERSION, DESTDIR, PS_PACKAGES, PS_CLIENT_PACKAGE, and CONFLUENT_VERSION environment variables must be set."
     exit 1
 fi
 
@@ -27,15 +27,34 @@ INSTALL="install -D -m 644"
 INSTALL_X="install -D -m 755"
 TMP_ARCHIVE_PATH="kafka_archive_tmp"
 
-rm -rf ${TMP_ARCHIVE_PATH}
-mkdir -p ${TMP_ARCHIVE_PATH}
-tar -xf core/build/distributions/kafka_${SCALA_VERSION_SHORT}-${SOURCE_VERSION}.tgz -C ${TMP_ARCHIVE_PATH} --strip-components 1
-
 rm -rf ${DESTDIR}${PREFIX}
 mkdir -p ${DESTDIR}${PREFIX}
 mkdir -p ${DESTDIR}${BINPATH}
 mkdir -p ${DESTDIR}${LIBPATH}
 mkdir -p ${DESTDIR}${SYSCONFDIR}
+
+###
+### Build and integrate Proactive Support into Kafka's eventual package
+###
+### Note: Proactive Support depends on Kafka, therefore we ran the builds
+###       at a point where Kafka itself was already built (cf. Makefile)
+###       and is now available in a local maven repository.
+BUILDROOT=/tmp/confluent
+for PS_PKG in $PS_PACKAGES; do
+  pushd $BUILDROOT/$PS_PKG
+  mvn clean install package
+  popd
+done
+for jardir in "$BUILD_ROOT/$PS_CLIENT_PACKAGE/package/target/${PS_CLIENT_PACKAGE}-package-${CONFLUENT_VERSION}-package/share/java/*"; do
+  ${INSTALL} -o root -g root ${jardir}/* ${DESTDIR}${LIBPATH}/
+done
+
+###
+### Kafka
+###
+rm -rf ${TMP_ARCHIVE_PATH}
+mkdir -p ${TMP_ARCHIVE_PATH}
+tar -xf core/build/distributions/kafka_${SCALA_VERSION_SHORT}-${SOURCE_VERSION}.tgz -C ${TMP_ARCHIVE_PATH} --strip-components 1
 
 ${INSTALL_X} -o root -g root ${TMP_ARCHIVE_PATH}/bin/connect-* ${DESTDIR}${BINPATH}/
 ${INSTALL_X} -o root -g root ${TMP_ARCHIVE_PATH}/bin/kafka-* ${DESTDIR}${BINPATH}/
