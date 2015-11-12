@@ -41,9 +41,7 @@ mkdir -p ${DESTDIR}${SYSCONFDIR}
 ###       and is now available in a local maven repository.
 BUILDROOT=/tmp/confluent
 for PS_PKG in $PS_PACKAGES; do
-  pushd $BUILDROOT/$PS_PKG
-  mvn clean install package
-  popd
+  (cd $BUILDROOT/$PS_PKG; mvn clean install package)
 done
 for jardir in "$BUILDROOT/$PS_CLIENT_PACKAGE/package/target/${PS_CLIENT_PACKAGE}-package-${CONFLUENT_VERSION}-package/share/java/*"; do
   ${INSTALL} -o root -g root ${jardir}/* ${DESTDIR}${LIBPATH}/
