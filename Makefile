@@ -73,9 +73,10 @@ export PACKAGE_NAME=confluent-kafka-$(VERSION)-$(SCALA_VERSION)
 # when the values aren't overridden by the script invoking the Makefile
 DEFAULT_APPLY_PATCHES=yes
 DEFAULT_DESTDIR=$(CURDIR)/BUILD/
-DEFAULT_PREFIX=/usr
-DEFAULT_SYSCONFDIR=/etc/kafka
+DEFAULT_PREFIX=$(PACKAGE_NAME)
+DEFAULT_SYSCONFDIR=PREFIX/etc/kafka
 DEFAULT_INCLUDE_WINDOWS_BIN=yes
+
 
 
 # Whether we should apply patches. This only makes sense for alternate packaging
