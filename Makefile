@@ -113,6 +113,12 @@ ifndef PS_ENABLED
 PS_ENABLED=$(DEFAULT_PS_ENABLED)
 endif
 
+ifeq ($(PS_ENABELD),yes)
+	PATCH_SERIES=patches/series_proactive_support
+else
+	PATCH_SERIES=patches/series
+endif
+
 export APPLY_PATCHES
 export SOURCE_VERSION
 export VERSION

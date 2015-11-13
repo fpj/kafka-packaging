@@ -1,0 +1,6 @@
+remove_sh_from_bin_filenames.patch
+lsb_layout_classpath_setup.patch
+data_dirs_in_var_lib.patch
+default_logs_in_var_log.patch
+default_log_config_paths.patch
+confluent_proactive_support.patch
