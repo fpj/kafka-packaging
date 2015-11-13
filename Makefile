@@ -114,9 +114,9 @@ PS_ENABLED=$(DEFAULT_PS_ENABLED)
 endif
 
 ifeq ($(PS_ENABLED),yes)
-PATCH_SERIES=patches/series_proactive_support
+PATCH_SERIES=series_proactive_support
 else
-PATCH_SERIES=patches/series
+PATCH_SERIES=series
 endif
 
 export APPLY_PATCHES
