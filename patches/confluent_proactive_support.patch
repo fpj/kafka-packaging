@@ -1,46 +1,8 @@
-diff --git a/bin/connect-distributed b/bin/connect-distributed
-index 1e72ed4..5e7faea 100755
---- a/bin/connect-distributed
-+++ b/bin/connect-distributed
-@@ -16,6 +16,14 @@
- 
- base_dir=$(dirname $0)
- 
-+# Packaged version needs to add Avro serializer/converter (currently bundled with schema registry)
-+CLASSPATH=$CLASSPATH:$base_dir/../share/java/schema-registry/*
-+
-+# Packaged version needs to add Kafka Connect connectors
-+for dir in $base_dir/../share/java/kafka-connect*; do
-+  CLASSPATH=$CLASSPATH:$dir/*
-+done
-+
- if [ "x$KAFKA_LOG4J_OPTS" = "x" ]; then
-   LOG4J_CONFIG_NORMAL_INSTALL="/etc/kafka/connect-log4j.properties"
-   LOG4J_CONFIG_ZIP_INSTALL="$base_dir/../etc/kafka/connect-log4j.properties"
-diff --git a/bin/connect-standalone b/bin/connect-standalone
-index b30293d..505951c 100755
---- a/bin/connect-standalone
-+++ b/bin/connect-standalone
-@@ -16,6 +16,14 @@
- 
- base_dir=$(dirname $0)
- 
-+# Packaged version needs to add Avro serializer/converter (currently bundled with schema registry)
-+CLASSPATH=$CLASSPATH:$base_dir/../share/java/schema-registry/*
-+
-+# Packaged version needs to add Kafka Connect connectors
-+for dir in $base_dir/../share/java/kafka-connect*; do
-+  CLASSPATH=$CLASSPATH:$dir/*
-+done
-+
- if [ "x$KAFKA_LOG4J_OPTS" = "x" ]; then
-   LOG4J_CONFIG_NORMAL_INSTALL="/etc/kafka/connect-log4j.properties"
-   LOG4J_CONFIG_ZIP_INSTALL="$base_dir/../etc/kafka/connect-log4j.properties"
 diff --git a/bin/kafka-server-start b/bin/kafka-server-start
-index acfbf15..1ba8099 100755
+index 5c364fb..53a1a26 100755
 --- a/bin/kafka-server-start
 +++ b/bin/kafka-server-start
-@@ -49,4 +49,4 @@ case $COMMAND in
+@@ -50,4 +50,4 @@ case $COMMAND in
      ;;
  esac
  
