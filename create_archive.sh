@@ -39,16 +39,18 @@ mkdir -p ${DESTDIR}${SYSCONFDIR}
 ### Note: Proactive Support depends on Kafka, therefore we ran the builds
 ###       at a point where Kafka itself was already built (cf. Makefile)
 ###       and is now available in a local maven repository.
-BUILDROOT=/tmp/confluent
-for PS_PKG in $PS_PACKAGES; do
-  # We are running the build in a subshell;  for some reason using pushd+popd
-  # to change into and out of the respective build directory caused the build
-  # to fail (and this script to tar-archive all of top-level /usr).
-  (cd $BUILDROOT/$PS_PKG; mvn clean install package)
-done
-for jardir in "$BUILDROOT/$PS_CLIENT_PACKAGE/package/target/${PS_CLIENT_PACKAGE}-package-${CONFLUENT_VERSION}-package/share/java/*"; do
-  ${INSTALL} -o root -g root ${jardir}/* ${DESTDIR}${LIBPATH}/
-done
+if [ "$PS_ENABLED" = "yes" ]; then
+  BUILDROOT=/tmp/confluent
+  for PS_PKG in $PS_PACKAGES; do
+    # We are running the build in a subshell;  for some reason using pushd+popd
+    # to change into and out of the respective build directory caused the build
+    # to fail (and this script to tar-archive all of top-level /usr).
+    (cd $BUILDROOT/$PS_PKG; mvn clean install package)
+  done
+  for jardir in "$BUILDROOT/$PS_CLIENT_PACKAGE/package/target/${PS_CLIENT_PACKAGE}-package-${CONFLUENT_VERSION}-package/share/java/*"; do
+    ${INSTALL} -o root -g root ${jardir}/* ${DESTDIR}${LIBPATH}/
+  done
+fi
 
 ###
 ### Kafka
