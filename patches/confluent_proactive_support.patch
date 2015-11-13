@@ -1,0 +1,137 @@
+diff --git a/bin/connect-distributed b/bin/connect-distributed
+index 1e72ed4..5e7faea 100755
+--- a/bin/connect-distributed
++++ b/bin/connect-distributed
+@@ -16,6 +16,14 @@
+ 
+ base_dir=$(dirname $0)
+ 
++# Packaged version needs to add Avro serializer/converter (currently bundled with schema registry)
++CLASSPATH=$CLASSPATH:$base_dir/../share/java/schema-registry/*
++
++# Packaged version needs to add Kafka Connect connectors
++for dir in $base_dir/../share/java/kafka-connect*; do
++  CLASSPATH=$CLASSPATH:$dir/*
++done
++
+ if [ "x$KAFKA_LOG4J_OPTS" = "x" ]; then
+   LOG4J_CONFIG_NORMAL_INSTALL="/etc/kafka/connect-log4j.properties"
+   LOG4J_CONFIG_ZIP_INSTALL="$base_dir/../etc/kafka/connect-log4j.properties"
+diff --git a/bin/connect-standalone b/bin/connect-standalone
+index b30293d..505951c 100755
+--- a/bin/connect-standalone
++++ b/bin/connect-standalone
+@@ -16,6 +16,14 @@
+ 
+ base_dir=$(dirname $0)
+ 
++# Packaged version needs to add Avro serializer/converter (currently bundled with schema registry)
++CLASSPATH=$CLASSPATH:$base_dir/../share/java/schema-registry/*
++
++# Packaged version needs to add Kafka Connect connectors
++for dir in $base_dir/../share/java/kafka-connect*; do
++  CLASSPATH=$CLASSPATH:$dir/*
++done
++
+ if [ "x$KAFKA_LOG4J_OPTS" = "x" ]; then
+   LOG4J_CONFIG_NORMAL_INSTALL="/etc/kafka/connect-log4j.properties"
+   LOG4J_CONFIG_ZIP_INSTALL="$base_dir/../etc/kafka/connect-log4j.properties"
+diff --git a/bin/kafka-server-start b/bin/kafka-server-start
+index acfbf15..1ba8099 100755
+--- a/bin/kafka-server-start
++++ b/bin/kafka-server-start
+@@ -49,4 +49,4 @@ case $COMMAND in
+     ;;
+ esac
+ 
+-exec $base_dir/kafka-run-class $EXTRA_ARGS kafka.Kafka $@
++exec $base_dir/kafka-run-class $EXTRA_ARGS io.confluent.support.metrics.SupportedKafka $@
+diff --git a/bin/kafka-server-stop b/bin/kafka-server-stop
+index cd8160c..b4755c3 100755
+--- a/bin/kafka-server-stop
++++ b/bin/kafka-server-stop
+@@ -13,4 +13,4 @@
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+-ps ax | grep -i 'kafka\.Kafka' | grep java | grep -v grep | awk '{print $1}' | xargs kill -SIGTERM
++ps ax | grep -i 'io\.confluent\.support\.metrics\.SupportedKafka' | grep java | grep -v grep | awk '{print $1}' | xargs kill -SIGTERM
+diff --git a/bin/windows/kafka-server-start.bat b/bin/windows/kafka-server-start.bat
+index ae56b48..aba999c 100644
+--- a/bin/windows/kafka-server-start.bat
++++ b/bin/windows/kafka-server-start.bat
+@@ -26,5 +26,5 @@ if exists %~dp0../../etc/kafka/log4j.properties (
+ 	set KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:%~dp0../../config/log4j.properties
+ )
+ set KAFKA_HEAP_OPTS=-Xmx1G -Xms1G
+-%~dp0kafka-run-class.bat kafka.Kafka %*
++%~dp0kafka-run-class.bat io.confluent.support.metrics.SupportedKafka %*
+ EndLocal
+diff --git a/bin/windows/kafka-server-stop.bat b/bin/windows/kafka-server-stop.bat
+index 676577c..85212c5 100644
+--- a/bin/windows/kafka-server-stop.bat
++++ b/bin/windows/kafka-server-stop.bat
+@@ -14,5 +14,5 @@ rem WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ rem See the License for the specific language governing permissions and
+ rem limitations under the License.
+ 
+-wmic process where (commandline like "%%kafka.Kafka%%" and not name="wmic.exe") delete
+-rem ps ax | grep -i 'kafka.Kafka' | grep -v grep | awk '{print $1}' | xargs kill -SIGTERM
++wmic process where (commandline like "%%io.confluent.support.metrics.SupportedKafka%%" and not name="wmic.exe") delete
++rem ps ax | grep -i 'io\.confluent\.support\.metrics\.SupportedKafka' | grep java | grep -v grep | awk '{print $1}' | xargs kill -SIGTERM
+diff --git a/config/server.properties b/config/server.properties
+index 8595ec8..92724e7 100644
+--- a/config/server.properties
++++ b/config/server.properties
+@@ -121,3 +121,51 @@ zookeeper.connect=localhost:2181
+ 
+ # Timeout in ms for connecting to zookeeper
+ zookeeper.connection.timeout.ms=6000
++
++############################ Confluent Support ####################
++
++# The customer ID under which metrics will be collected and reported.
++#
++# When the customer ID is set to "anonymous" (the default), then only
++# a reduced set of metrics is being collected and reported.
++#
++# If you are a Confluent customer, then you should replace the default value
++# with your actual Confluent customer ID.  Doing so will ensure that further
++# support-relevant metrics will be collected and reported.
++confluent.support.customer.id=anonymous
++
++# The interval at which metrics will be collected from and reported by this
++# broker.
++confluent.support.metrics.report.interval.hours=24
++
++# The Kafka topic (within the same cluster as this broker) to which
++# support metrics will be submitted.
++#
++# To disable the collection of support metrics to an internal Kafka topic
++# set this variable to an empty value.
++confluent.support.metrics.topic=__confluent.support.metrics
++
++# Endpoint for secure transmission of support metrics to Confluent.
++#
++# The secure endpoint takes precedence over the insecure endpoint, i.e. if the
++# secure endpoint is enabled, then metrics will not be transmitted via the
++# insecure endpoint.  If the secure endpoint is not reachable, metrics
++# transmission falls back to the insecure endpoint (if enabled).
++#
++# To disable sharing metrics over the secure endpoint set this variable to an
++# empty value.
++#
++# Note: To disable the sharing of any metrics with Confluent you must disable both
++#       the secure and the insecure endpoints.
++confluent.support.metrics.endpoint.secure=https://www.confluentsupportmet.confluent.io/support
++
++# Endpoint for insecure transmission of support metrics to Confluent.
++#
++# The insecure endpoint has lower priority than the secure endpoint.
++#
++# To disable sharing metrics over the insecure endpoint set this variable to
++# an empty value.
++#
++# Note: To disable the sharing of any metrics with Confluent you must disable both
++#       the secure and the insecure endpoints.
++confluent.support.metrics.endpoint.insecure=http://confluentsupportmet-env.elasticbeanstalk.com/support
