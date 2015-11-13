@@ -47,7 +47,9 @@ if [ "$PS_ENABLED" = "yes" ]; then
     # to fail (and this script to tar-archive all of top-level /usr).
     (cd $BUILDROOT/$PS_PKG; mvn clean install package)
   done
-  for jardir in "$BUILDROOT/$PS_CLIENT_PACKAGE/package/target/${PS_CLIENT_PACKAGE}-package-${CONFLUENT_VERSION}-package/share/java/*"; do
+  BUILD_PACKAGE_ROOT="$BUILDROOT/$PS_CLIENT_PACKAGE/package/target/${PS_CLIENT_PACKAGE}-package-${CONFLUENT_VERSION}-package"
+  ${INSTALL_X} -o root -g root ${BUILD_PACKAGE_ROOT}/bin/* ${DESTDIR}${BINPATH}/
+  for jardir in "$BUILD_PACKAGE_ROOT/share/java/*"; do
     ${INSTALL} -o root -g root ${jardir}/* ${DESTDIR}${LIBPATH}/
   done
 fi
