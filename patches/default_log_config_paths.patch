@@ -1,8 +1,8 @@
 diff --git a/bin/connect-distributed b/bin/connect-distributed
-index 354c3cc..1e72ed4 100755
+index 354c3cc..65c5f8b 100755
 --- a/bin/connect-distributed
 +++ b/bin/connect-distributed
-@@ -17,7 +17,15 @@
+@@ -17,7 +17,16 @@
  base_dir=$(dirname $0)
  
  if [ "x$KAFKA_LOG4J_OPTS" = "x" ]; then
@@ -17,13 +17,14 @@ index 354c3cc..1e72ed4 100755
 +    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/connect-log4j.properties"
 +  fi
  fi
++export KAFKA_LOG4J_OPTS
  
  exec $(dirname $0)/kafka-run-class org.apache.kafka.connect.cli.ConnectDistributed "$@"
 diff --git a/bin/connect-standalone b/bin/connect-standalone
-index 85904f7..b30293d 100755
+index 85904f7..ca58fe6 100755
 --- a/bin/connect-standalone
 +++ b/bin/connect-standalone
-@@ -17,7 +17,15 @@
+@@ -17,7 +17,16 @@
  base_dir=$(dirname $0)
  
  if [ "x$KAFKA_LOG4J_OPTS" = "x" ]; then
@@ -38,6 +39,7 @@ index 85904f7..b30293d 100755
 +    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/connect-log4j.properties"
 +  fi
  fi
++export KAFKA_LOG4J_OPTS
  
  exec $(dirname $0)/kafka-run-class org.apache.kafka.connect.cli.ConnectStandalone "$@"
 diff --git a/bin/kafka-run-class b/bin/kafka-run-class
@@ -62,10 +64,10 @@ index 1fb4eff..10dee75 100755
    # create logs directory
    if [ ! -d "$LOG_DIR" ]; then
 diff --git a/bin/kafka-server-start b/bin/kafka-server-start
-index e74a0ae..acfbf15 100755
+index e74a0ae..5c364fb 100755
 --- a/bin/kafka-server-start
 +++ b/bin/kafka-server-start
-@@ -22,7 +22,15 @@ fi
+@@ -22,8 +22,17 @@ fi
  base_dir=$(dirname $0)
  
  if [ "x$KAFKA_LOG4J_OPTS" = "x" ]; then
@@ -80,8 +82,10 @@ index e74a0ae..acfbf15 100755
 +    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"
 +  fi
  fi
++export KAFKA_LOG4J_OPTS
  
  if [ "x$KAFKA_HEAP_OPTS" = "x" ]; then
+     export KAFKA_HEAP_OPTS="-Xmx1G -Xms1G"
 diff --git a/bin/windows/kafka-run-class.bat b/bin/windows/kafka-run-class.bat
 index f5b8faa..64dc42f 100644
 --- a/bin/windows/kafka-run-class.bat
@@ -134,10 +138,10 @@ index 9836283..9a31936 100644
  %~dp0kafka-run-class.bat org.apache.zookeeper.server.quorum.QuorumPeerMain %*
  EndLocal
 diff --git a/bin/zookeeper-server-start b/bin/zookeeper-server-start
-index fbbc8f6..8d6bcfa 100755
+index fbbc8f6..755d753 100755
 --- a/bin/zookeeper-server-start
 +++ b/bin/zookeeper-server-start
-@@ -22,7 +22,15 @@ fi
+@@ -22,8 +22,17 @@ fi
  base_dir=$(dirname $0)
  
  if [ "x$KAFKA_LOG4J_OPTS" = "x" ]; then
@@ -152,5 +156,7 @@ index fbbc8f6..8d6bcfa 100755
 +    KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"
 +  fi
  fi
++export KAFKA_LOG4J_OPTS
  
  if [ "x$KAFKA_HEAP_OPTS" = "x" ]; then
+     export KAFKA_HEAP_OPTS="-Xmx512M -Xms512M"
