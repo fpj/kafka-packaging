@@ -113,7 +113,7 @@ ifndef PS_ENABLED
 PS_ENABLED=$(DEFAULT_PS_ENABLED)
 endif
 
-ifeq ($(PS_ENABELD),yes)
+ifeq ($(PS_ENABLED),yes)
 	PATCH_SERIES=patches/series_proactive_support
 else
 	PATCH_SERIES=patches/series
