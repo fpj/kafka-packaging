@@ -114,6 +114,12 @@ ifndef PS_ENABLED
 PS_ENABLED=$(DEFAULT_PS_ENABLED)
 endif
 
+ifeq ($(PS_ENABLED),yes)
+	PATCH_SERIES=patches/series_proactive_support
+else
+	PATCH_SERIES=patches/series
+endif
+
 export APPLY_PATCHES
 export SOURCE_VERSION
 export VERSION
@@ -144,7 +150,7 @@ gradle-$(GRADLE_VERSION):
 apply-patches: $(wildcard patches/*)
 ifeq ($(APPLY_PATCHES),yes)
 	git reset --hard HEAD
-	cat patches/series | xargs -IPATCH bash -c 'patch -p1 < patches/PATCH'
+	cat patches/$(PATCH_SERIES) | xargs -IPATCH bash -c 'patch -p1 < patches/PATCH'
 endif
 
 kafka: gradle apply-patches
