@@ -46,7 +46,7 @@ GRADLE=./gradle-$(GRADLE_VERSION)/bin/gradle
 # are required and passed to create_archive.sh as environment variables. That
 # script can also pick up some other settings (PREFIX, SYSCONFDIR) to customize
 # layout of the installation.
-# Source version *must8 be extracted from the source code since we need it to
+# Source version *must* be extracted from the source code since we need it to
 # use files that are generated.
 SOURCE_VERSION=$(shell grep version gradle.properties | awk -F= '{ print $$2 }')
 # Version is our own packaged version number.
@@ -114,9 +114,9 @@ PS_ENABLED=$(DEFAULT_PS_ENABLED)
 endif
 
 ifeq ($(PS_ENABLED),yes)
-PATCH_SERIES=series_proactive_support
+PATCH_SERIES_TEMPLATE=series.proactive_support.in
 else
-PATCH_SERIES=series
+PATCH_SERIES_TEMPLATE=series.in
 endif
 
 export APPLY_PATCHES
@@ -149,7 +149,7 @@ gradle-$(GRADLE_VERSION):
 apply-patches: $(wildcard patches/*)
 ifeq ($(APPLY_PATCHES),yes)
 	git reset --hard HEAD
-	cat patches/$(PATCH_SERIES) | xargs -IPATCH bash -c 'patch -p1 < patches/PATCH'
+	cat patches/series | xargs -IPATCH bash -c 'patch -p1 < patches/PATCH'
 endif
 
 kafka: gradle apply-patches
@@ -226,3 +226,8 @@ confluent-kafka.spec:
 
 RELEASE_%:
 	echo 0 > $@
+
+patch-series:
+	cp patches/$(PATCH_SERIES_TEMPLATE) patches/series
+	git add patches/series
+	git commit -m "Created patches/series"
