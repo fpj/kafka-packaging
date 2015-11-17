@@ -1,0 +1,42 @@
+diff --git a/bin/connect-distributed b/bin/connect-distributed
+index 65c5f8b..0932be8 100755
+--- a/bin/connect-distributed
++++ b/bin/connect-distributed
+@@ -16,6 +16,16 @@
+ 
+ base_dir=$(dirname $0)
+ 
++# classpath addition for any Kafka Connect connectors
++# included in releases with LSB-style layout
++for dir in $base_dir/../share/java/kafka-connect-*; do
++  CLASSPATH=$CLASSPATH:$dir/*
++done
++
++# classpath addition for kafka-serde-tools (e.g. Avro serializer),
++# which are currently bundled with the Confluent schema-registry package
++CLASSPATH=$CLASSPATH:$base_dir/../share/java/kafka-serde-tools/*
++
+ if [ "x$KAFKA_LOG4J_OPTS" = "x" ]; then
+   LOG4J_CONFIG_NORMAL_INSTALL="/etc/kafka/connect-log4j.properties"
+   LOG4J_CONFIG_ZIP_INSTALL="$base_dir/../etc/kafka/connect-log4j.properties"
+diff --git a/bin/connect-standalone b/bin/connect-standalone
+index ca58fe6..f1f119f 100755
+--- a/bin/connect-standalone
++++ b/bin/connect-standalone
+@@ -16,6 +16,16 @@
+ 
+ base_dir=$(dirname $0)
+ 
++# classpath addition for any Kafka Connect connectors
++# included in releases with LSB-style layout
++for dir in $base_dir/../share/java/kafka-connect-*; do
++  CLASSPATH=$CLASSPATH:$dir/*
++done
++
++# classpath addition for kafka-serde-tools (e.g. Avro serializer),
++# which are currently bundled with the Confluent schema-registry package
++CLASSPATH=$CLASSPATH:$base_dir/../share/java/kafka-serde-tools/*
++
+ if [ "x$KAFKA_LOG4J_OPTS" = "x" ]; then
+   LOG4J_CONFIG_NORMAL_INSTALL="/etc/kafka/connect-log4j.properties"
+   LOG4J_CONFIG_ZIP_INSTALL="$base_dir/../etc/kafka/connect-log4j.properties"

@@ -1,3 +1,4 @@
 remove_sh_from_bin_filenames.patch
 lsb_layout_classpath_setup.patch
 default_log_config_paths.patch
+kafka_connect_classpath_additions.patch
