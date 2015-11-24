@@ -85,7 +85,7 @@ index 8595ec8..92724e7 100644
 +#
 +# Note: To disable the sharing of any metrics with Confluent you must disable both
 +#       the secure and the insecure endpoints.
-+confluent.support.metrics.endpoint.secure=https://www.confluentsupportmet.confluent.io/support
++confluent.support.metrics.endpoint.secure=https://support-metrics.confluent.io/submit
 +
 +# Endpoint for insecure transmission of support metrics to Confluent.
 +#
@@ -96,4 +96,4 @@ index 8595ec8..92724e7 100644
 +#
 +# Note: To disable the sharing of any metrics with Confluent you must disable both
 +#       the secure and the insecure endpoints.
-+confluent.support.metrics.endpoint.insecure=http://www.confluentsupportmet.confluent.io/support
++confluent.support.metrics.endpoint.insecure=http://support-metrics.confluent.io/submit
