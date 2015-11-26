@@ -42,10 +42,10 @@ index 676577c..85212c5 100644
 +wmic process where (commandline like "%%io.confluent.support.metrics.SupportedKafka%%" and not name="wmic.exe") delete
 +rem ps ax | grep -i 'io\.confluent\.support\.metrics\.SupportedKafka' | grep java | grep -v grep | awk '{print $1}' | xargs kill -SIGTERM
 diff --git a/config/server.properties b/config/server.properties
-index 8595ec8..92724e7 100644
+index 8595ec8..4455a20 100644
 --- a/config/server.properties
 +++ b/config/server.properties
-@@ -121,3 +121,51 @@ zookeeper.connect=localhost:2181
+@@ -121,3 +121,60 @@ zookeeper.connect=localhost:2181
  
  # Timeout in ms for connecting to zookeeper
  zookeeper.connection.timeout.ms=6000
@@ -59,7 +59,10 @@ index 8595ec8..92724e7 100644
 +#
 +# If you are a Confluent customer, then you should replace the default value
 +# with your actual Confluent customer ID.  Doing so will ensure that further
-+# support-relevant metrics will be collected and reported.
++# support-relevant metrics will be collected and reported.  Also, as a
++# friendly reminder, you will also need to update the settings
++# `confluent.support.metrics.endpoint.secure` and
++# `confluent.support.metrics.endpoint.insecure` (see below for details).
 +confluent.support.customer.id=anonymous
 +
 +# The interval at which metrics will be collected from and reported by this
@@ -73,7 +76,8 @@ index 8595ec8..92724e7 100644
 +# set this variable to an empty value.
 +confluent.support.metrics.topic=__confluent.support.metrics
 +
-+# Endpoint for secure transmission of support metrics to Confluent.
++# Endpoint for secure transmission of support metrics to Confluent via the
++# Internet.
 +#
 +# The secure endpoint takes precedence over the insecure endpoint, i.e. if the
 +# secure endpoint is enabled, then metrics will not be transmitted via the
@@ -81,19 +85,24 @@ index 8595ec8..92724e7 100644
 +# transmission falls back to the insecure endpoint (if enabled).
 +#
 +# To disable sharing metrics over the secure endpoint set this variable to an
-+# empty value.
++# empty value.  If you disable both the secure and the insecure endpoint then
++# no metrics will be shared with Confluent.
 +#
-+# Note: To disable the sharing of any metrics with Confluent you must disable both
-+#       the secure and the insecure endpoints.
++# Note for Confluent customers: You must change the default secure endpoint below
++# to the one reserved for customer use.  Please refer to the Confluent Platform
++# documentation about Proactive Support.
 +confluent.support.metrics.endpoint.secure=https://support-metrics.confluent.io/anon
 +
-+# Endpoint for insecure transmission of support metrics to Confluent.
++# Endpoint for insecure transmission of support metrics to Confluent via the
++# Internet.
 +#
 +# The insecure endpoint has lower priority than the secure endpoint.
 +#
-+# To disable sharing metrics over the insecure endpoint set this variable to
-+# an empty value.
++# To disable sharing metrics over the insecure endpoint set this variable to an
++# empty value.  If you disable both the secure and the insecure endpoint then
++# no metrics will be shared with Confluent.
 +#
-+# Note: To disable the sharing of any metrics with Confluent you must disable both
-+#       the secure and the insecure endpoints.
++# Note for Confluent customers: You must change the default insecure endpoint below
++# to the one reserved for customer use.  Please refer to the Confluent Platform
++# documentation about Proactive Support.
 +confluent.support.metrics.endpoint.insecure=http://support-metrics.confluent.io/anon
