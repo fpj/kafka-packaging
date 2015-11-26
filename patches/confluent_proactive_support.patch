@@ -42,10 +42,10 @@ index 676577c..85212c5 100644
 +wmic process where (commandline like "%%io.confluent.support.metrics.SupportedKafka%%" and not name="wmic.exe") delete
 +rem ps ax | grep -i 'io\.confluent\.support\.metrics\.SupportedKafka' | grep java | grep -v grep | awk '{print $1}' | xargs kill -SIGTERM
 diff --git a/config/server.properties b/config/server.properties
-index 8595ec8..8554892 100644
+index 8595ec8..4455a20 100644
 --- a/config/server.properties
 +++ b/config/server.properties
-@@ -121,3 +121,57 @@ zookeeper.connect=localhost:2181
+@@ -121,3 +121,60 @@ zookeeper.connect=localhost:2181
  
  # Timeout in ms for connecting to zookeeper
  zookeeper.connection.timeout.ms=6000
@@ -59,7 +59,10 @@ index 8595ec8..8554892 100644
 +#
 +# If you are a Confluent customer, then you should replace the default value
 +# with your actual Confluent customer ID.  Doing so will ensure that further
-+# support-relevant metrics will be collected and reported.
++# support-relevant metrics will be collected and reported.  Also, as a
++# friendly reminder, you will also need to update the settings
++# `confluent.support.metrics.endpoint.secure` and
++# `confluent.support.metrics.endpoint.insecure` (see below for details).
 +confluent.support.customer.id=anonymous
 +
 +# The interval at which metrics will be collected from and reported by this
