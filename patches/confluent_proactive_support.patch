@@ -42,67 +42,31 @@ index 676577c..85212c5 100644
 +wmic process where (commandline like "%%io.confluent.support.metrics.SupportedKafka%%" and not name="wmic.exe") delete
 +rem ps ax | grep -i 'io\.confluent\.support\.metrics\.SupportedKafka' | grep java | grep -v grep | awk '{print $1}' | xargs kill -SIGTERM
 diff --git a/config/server.properties b/config/server.properties
-index 8595ec8..4455a20 100644
+index 8595ec8..5a7bd91 100644
 --- a/config/server.properties
 +++ b/config/server.properties
-@@ -121,3 +121,60 @@ zookeeper.connect=localhost:2181
+@@ -121,3 +121,24 @@ zookeeper.connect=localhost:2181
  
  # Timeout in ms for connecting to zookeeper
  zookeeper.connection.timeout.ms=6000
 +
-+############################ Confluent Support ####################
++##################### Confluent Proactive Support ######################
 +
-+# The customer ID under which metrics will be collected and reported.
++# If set to true, then the feature to collect and report support metrics
++# ("Metrics") is enabled.  If set to false, the feature is disabled.
 +#
-+# When the customer ID is set to "anonymous" (the default), then only
-+# a reduced set of metrics is being collected and reported.
++confluent.support.metrics.enable=true
++
++# The customer ID under which support metrics will be collected and
++# reported.
 +#
-+# If you are a Confluent customer, then you should replace the default value
-+# with your actual Confluent customer ID.  Doing so will ensure that further
-+# support-relevant metrics will be collected and reported.  Also, as a
-+# friendly reminder, you will also need to update the settings
-+# `confluent.support.metrics.endpoint.secure` and
-+# `confluent.support.metrics.endpoint.insecure` (see below for details).
++# When the customer ID is set to "anonymous" (the default), then only a
++# reduced set of metrics is being collected and reported.
++#
++# Confluent customers
++# -------------------
++# If you are a Confluent customer, then you should replace the default
++# value with your actual Confluent customer ID.  Doing so will ensure
++# that additional support metrics will be collected and reported.
++#
 +confluent.support.customer.id=anonymous
-+
-+# The interval at which metrics will be collected from and reported by this
-+# broker.
-+confluent.support.metrics.report.interval.hours=24
-+
-+# The Kafka topic (within the same cluster as this broker) to which
-+# support metrics will be submitted.
-+#
-+# To disable the collection of support metrics to an internal Kafka topic
-+# set this variable to an empty value.
-+confluent.support.metrics.topic=__confluent.support.metrics
-+
-+# Endpoint for secure transmission of support metrics to Confluent via the
-+# Internet.
-+#
-+# The secure endpoint takes precedence over the insecure endpoint, i.e. if the
-+# secure endpoint is enabled, then metrics will not be transmitted via the
-+# insecure endpoint.  If the secure endpoint is not reachable, metrics
-+# transmission falls back to the insecure endpoint (if enabled).
-+#
-+# To disable sharing metrics over the secure endpoint set this variable to an
-+# empty value.  If you disable both the secure and the insecure endpoint then
-+# no metrics will be shared with Confluent.
-+#
-+# Note for Confluent customers: You must change the default secure endpoint below
-+# to the one reserved for customer use.  Please refer to the Confluent Platform
-+# documentation about Proactive Support.
-+confluent.support.metrics.endpoint.secure=https://support-metrics.confluent.io/anon
-+
-+# Endpoint for insecure transmission of support metrics to Confluent via the
-+# Internet.
-+#
-+# The insecure endpoint has lower priority than the secure endpoint.
-+#
-+# To disable sharing metrics over the insecure endpoint set this variable to an
-+# empty value.  If you disable both the secure and the insecure endpoint then
-+# no metrics will be shared with Confluent.
-+#
-+# Note for Confluent customers: You must change the default insecure endpoint below
-+# to the one reserved for customer use.  Please refer to the Confluent Platform
-+# documentation about Proactive Support.
-+confluent.support.metrics.endpoint.insecure=http://support-metrics.confluent.io/anon
