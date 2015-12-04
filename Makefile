@@ -77,13 +77,18 @@ DEFAULT_PREFIX=$(PACKAGE_NAME)
 DEFAULT_SYSCONFDIR=PREFIX/etc/kafka
 DEFAULT_INCLUDE_WINDOWS_BIN=yes
 DEFAULT_PS_ENABLED=yes
-
+DEFAULT_SKIP_TESTS=no
 
 
 # Whether we should apply patches. This only makes sense for alternate packaging
 # systems that know how to apply patches themselves, e.g. Debian.
 ifndef APPLY_PATCHES
 APPLY_PATCHES=$(DEFAULT_APPLY_PATCHES)
+endif
+
+# Whether we should run tests during the build.
+ifndef SKIP_TESTS
+SKIP_TESTS=$(DEFAULT_SKIP_TESTS)
 endif
 
 # Install directories
@@ -132,6 +137,7 @@ export PS_ENABLED
 export PS_PACKAGES
 export PS_CLIENT_PACKAGE
 export CONFLUENT_VERSION
+export SKIP_TESTS
 
 all: install
 
