@@ -5,8 +5,8 @@
 
 set -e
 
-if [ -z "${VERSION}" -o -z "${SOURCE_VERSION}" -o -z "${SCALA_VERSION}" -o -z "${DESTDIR}" -o -z "${PS_PACKAGES}" -o -z "$PS_CLIENT_PACKAGE" -o -z "${CONFLUENT_VERSION}" ]; then
-    echo "VERSION, SOURCE_VERSION, SCALA_VERSION, DESTDIR, PS_PACKAGES, PS_CLIENT_PACKAGE, and CONFLUENT_VERSION environment variables must be set."
+if [ -z "${VERSION}" -o -z "${SOURCE_VERSION}" -o -z "${SCALA_VERSION}" -o -z "${DESTDIR}" -o -z "${PS_PACKAGES}" -o -z "$PS_CLIENT_PACKAGE" -o -z "${CONFLUENT_VERSION}" -o -z "${SKIP_TESTS}" ]; then
+    echo "VERSION, SOURCE_VERSION, SCALA_VERSION, DESTDIR, PS_PACKAGES, PS_CLIENT_PACKAGE, CONFLUENT_VERSION, and SKIP_TESTS environment variables must be set."
     exit 1
 fi
 
@@ -43,7 +43,11 @@ if [ "$PS_ENABLED" = "yes" ]; then
   BUILDROOT=/tmp/confluent
   for PS_PKG in $PS_PACKAGES; do
     pushd $BUILDROOT/$PS_PKG
-    mvn clean install package
+    if [ "$SKIP_TESTS" = "yes" ]; then
+      mvn -DskipTests=true clean install package
+    else
+      mvn clean install package
+    fi
     popd
   done
   BUILD_PACKAGE_ROOT="$BUILDROOT/$PS_CLIENT_PACKAGE/package/target/${PS_CLIENT_PACKAGE}-package-${CONFLUENT_VERSION}-package"
