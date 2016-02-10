@@ -58,7 +58,7 @@ if [ "$PS_ENABLED" = "yes" ]; then
     fi
     popd
   done
-  BUILD_PACKAGE_ROOT="$BUILDROOT/$PS_CLIENT_PACKAGE/package/target/${PS_CLIENT_PACKAGE}-package-${CONFLUENT_VERSION}-package"
+  BUILD_PACKAGE_ROOT=`find $BUILDROOT/$PS_CLIENT_PACKAGE/package/target -maxdepth 1 -name "${PS_CLIENT_PACKAGE}-package-*-package" -type d | head -1`
   ${INSTALL_X} -o root -g root ${BUILD_PACKAGE_ROOT}/bin/* ${DESTDIR}${BINPATH}/
   for jardir in "$BUILD_PACKAGE_ROOT/share/java/*"; do
     ${INSTALL} -o root -g root ${jardir}/* ${DESTDIR}${LIBPATH}/
