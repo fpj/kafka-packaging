@@ -43,10 +43,10 @@ index 85904f7..ca58fe6 100755
  
  exec $(dirname $0)/kafka-run-class org.apache.kafka.connect.cli.ConnectStandalone "$@"
 diff --git a/bin/kafka-run-class b/bin/kafka-run-class
-index 1fb4eff..10dee75 100755
+index ca57972..ca94e89 100755
 --- a/bin/kafka-run-class
 +++ b/bin/kafka-run-class
-@@ -108,7 +108,15 @@ fi
+@@ -98,7 +98,15 @@ fi
  # Log4j settings
  if [ -z "$KAFKA_LOG4J_OPTS" ]; then
    # Log to console. This is a tool.
@@ -64,7 +64,7 @@ index 1fb4eff..10dee75 100755
    # create logs directory
    if [ ! -d "$LOG_DIR" ]; then
 diff --git a/bin/kafka-server-start b/bin/kafka-server-start
-index e74a0ae..5c364fb 100755
+index e1ad21c..7ca2395 100755
 --- a/bin/kafka-server-start
 +++ b/bin/kafka-server-start
 @@ -22,8 +22,17 @@ fi
@@ -87,10 +87,10 @@ index e74a0ae..5c364fb 100755
  if [ "x$KAFKA_HEAP_OPTS" = "x" ]; then
      export KAFKA_HEAP_OPTS="-Xmx1G -Xms1G"
 diff --git a/bin/windows/kafka-run-class.bat b/bin/windows/kafka-run-class.bat
-index f5b8faa..64dc42f 100644
+index cd72bfd..9d7d657 100644
 --- a/bin/windows/kafka-run-class.bat
 +++ b/bin/windows/kafka-run-class.bat
-@@ -87,7 +87,11 @@ IF ["%JMX_PORT%"] NEQ [""] (
+@@ -77,7 +77,11 @@ IF ["%JMX_PORT%"] NEQ [""] (
  
  rem Log4j settings
  IF ["%KAFKA_LOG4J_OPTS%"] EQU [""] (
@@ -138,7 +138,7 @@ index 9836283..9a31936 100644
  %~dp0kafka-run-class.bat org.apache.zookeeper.server.quorum.QuorumPeerMain %*
  EndLocal
 diff --git a/bin/zookeeper-server-start b/bin/zookeeper-server-start
-index fbbc8f6..755d753 100755
+index 24b8e4d..21e1512 100755
 --- a/bin/zookeeper-server-start
 +++ b/bin/zookeeper-server-start
 @@ -22,8 +22,17 @@ fi
