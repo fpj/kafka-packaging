@@ -1,13 +1,13 @@
 diff --git a/bin/kafka-server-start b/bin/kafka-server-start
-index 5c364fb..53a1a26 100755
+index 7ca2395..14b399d 100755
 --- a/bin/kafka-server-start
 +++ b/bin/kafka-server-start
 @@ -50,4 +50,4 @@ case $COMMAND in
      ;;
  esac
  
--exec $base_dir/kafka-run-class $EXTRA_ARGS kafka.Kafka $@
-+exec $base_dir/kafka-run-class $EXTRA_ARGS io.confluent.support.metrics.SupportedKafka $@
+-exec $base_dir/kafka-run-class $EXTRA_ARGS kafka.Kafka "$@"
++exec $base_dir/kafka-run-class $EXTRA_ARGS io.confluent.support.metrics.SupportedKafka "$@"
 diff --git a/bin/kafka-server-stop b/bin/kafka-server-stop
 index cd8160c..b4755c3 100755
 --- a/bin/kafka-server-stop
@@ -42,10 +42,10 @@ index 676577c..85212c5 100644
 +wmic process where (commandline like "%%io.confluent.support.metrics.SupportedKafka%%" and not name="wmic.exe") delete
 +rem ps ax | grep -i 'io\.confluent\.support\.metrics\.SupportedKafka' | grep java | grep -v grep | awk '{print $1}' | xargs kill -SIGTERM
 diff --git a/config/server.properties b/config/server.properties
-index 8595ec8..5a7bd91 100644
+index ddb695a..d3bfe00 100644
 --- a/config/server.properties
 +++ b/config/server.properties
-@@ -121,3 +121,24 @@ zookeeper.connect=localhost:2181
+@@ -117,3 +117,24 @@ zookeeper.connect=localhost:2181
  
  # Timeout in ms for connecting to zookeeper
  zookeeper.connection.timeout.ms=6000

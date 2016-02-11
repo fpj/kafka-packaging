@@ -1,8 +1,8 @@
 diff --git a/bin/kafka-run-class b/bin/kafka-run-class
-index 1071af6..1fb4eff 100755
+index c2b3368..ff35340 100755
 --- a/bin/kafka-run-class
 +++ b/bin/kafka-run-class
-@@ -102,7 +102,7 @@ fi
+@@ -89,7 +89,7 @@ fi
  
  # Log directory to use
  if [ "x$LOG_DIR" = "x" ]; then
