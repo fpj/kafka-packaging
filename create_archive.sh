@@ -22,6 +22,7 @@ fi
 
 BINPATH=${PREFIX}/bin
 LIBPATH=${PREFIX}/share/java/kafka
+DOCPATH=${PREFIX}/share/doc/kafka
 
 INSTALL="install -D -m 644"
 INSTALL_X="install -D -m 755"
@@ -31,6 +32,7 @@ rm -rf ${DESTDIR}${PREFIX}
 mkdir -p ${DESTDIR}${PREFIX}
 mkdir -p ${DESTDIR}${BINPATH}
 mkdir -p ${DESTDIR}${LIBPATH}
+mkdir -p ${DESTDIR}${DOCPATH}
 mkdir -p ${DESTDIR}${SYSCONFDIR}
 
 ###
@@ -48,6 +50,10 @@ if [ "$PS_ENABLED" = "yes" ]; then
     else
       mvn clean install package
     fi
+    PS_DOCPATH_RELATIVE=share/doc/confluent-${PS_PKG}
+    mkdir -p ${DESTDIR}${PREFIX}/${PS_DOCPATH_RELATIVE}
+    ${INSTALL} -o root -g root ${BUILDROOT}/$PS_PKG/${PS_DOCPATH_RELATIVE}/LICENSE* ${DESTDIR}${PREFIX}/${PS_DOCPATH_RELATIVE}/
+    ${INSTALL} -o root -g root ${BUILDROOT}/$PS_PKG/${PS_DOCPATH_RELATIVE}/NOTICE*  ${DESTDIR}${PREFIX}/${PS_DOCPATH_RELATIVE}/
     popd
   done
   BUILD_PACKAGE_ROOT=`find $BUILDROOT/$PS_CLIENT_PACKAGE/package/target -maxdepth 1 -name "${PS_CLIENT_PACKAGE}-package-*-package" -type d | head -1`
@@ -75,6 +81,9 @@ ${INSTALL} -o root -g root ${TMP_ARCHIVE_PATH}/libs/* ${DESTDIR}${LIBPATH}/
 for path in ${TMP_ARCHIVE_PATH}/config/*; do
     ${INSTALL} -o root -g root ${path} ${DESTDIR}${SYSCONFDIR}/`basename ${path}`
 done
+
+${INSTALL} -o root -g root ${TMP_ARCHIVE_PATH}/LICENSE* ${DESTDIR}${DOCPATH}/
+${INSTALL} -o root -g root ${TMP_ARCHIVE_PATH}/NOTICE* ${DESTDIR}${DOCPATH}/
 
 ln -s ./kafka_${SCALA_VERSION_SHORT}-${SOURCE_VERSION}.jar ${DESTDIR}${LIBPATH}/kafka.jar # symlink for unversioned access to jar
 
