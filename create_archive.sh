@@ -52,8 +52,8 @@ if [ "$PS_ENABLED" = "yes" ]; then
     fi
     PS_DOCPATH_RELATIVE=share/doc/confluent-${PS_PKG}
     mkdir -p ${DESTDIR}${PREFIX}/${PS_DOCPATH_RELATIVE}
-    ${INSTALL} -o root -g root ${BUILDROOT}/$PS_PKG/${PS_DOCPATH_RELATIVE}/LICENSE* ${DESTDIR}${PREFIX}/${PS_DOCPATH_RELATIVE}/
-    ${INSTALL} -o root -g root ${BUILDROOT}/$PS_PKG/${PS_DOCPATH_RELATIVE}/NOTICE*  ${DESTDIR}${PREFIX}/${PS_DOCPATH_RELATIVE}/
+    ${INSTALL} -o root -g root ${BUILDROOT}/$PS_PKG/package/target/${PS_DOCPATH_RELATIVE}/LICENSE* ${DESTDIR}${PREFIX}/${PS_DOCPATH_RELATIVE}/
+    ${INSTALL} -o root -g root ${BUILDROOT}/$PS_PKG/package/target/${PS_DOCPATH_RELATIVE}/NOTICE*  ${DESTDIR}${PREFIX}/${PS_DOCPATH_RELATIVE}/
     popd
   done
   BUILD_PACKAGE_ROOT=`find $BUILDROOT/$PS_CLIENT_PACKAGE/package/target -maxdepth 1 -name "${PS_CLIENT_PACKAGE}-package-*-package" -type d | head -1`
