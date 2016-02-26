@@ -42,7 +42,7 @@ index 676577c..85212c5 100644
 +wmic process where (commandline like "%%io.confluent.support.metrics.SupportedKafka%%" and not name="wmic.exe") delete
 +rem ps ax | grep -i 'io\.confluent\.support\.metrics\.SupportedKafka' | grep java | grep -v grep | awk '{print $1}' | xargs kill -SIGTERM
 diff --git a/config/server.properties b/config/server.properties
-index ddb695a..d3bfe00 100644
+index b6d2b2d..c10844b 100644
 --- a/config/server.properties
 +++ b/config/server.properties
 @@ -117,3 +117,24 @@ zookeeper.connect=localhost:2181
