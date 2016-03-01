@@ -19,13 +19,13 @@ index cd8160c..b4755c3 100755
 -ps ax | grep -i 'kafka\.Kafka' | grep java | grep -v grep | awk '{print $1}' | xargs kill -SIGTERM
 +ps ax | grep -i 'io\.confluent\.support\.metrics\.SupportedKafka' | grep java | grep -v grep | awk '{print $1}' | xargs kill -SIGTERM
 diff --git a/bin/windows/kafka-server-start.bat b/bin/windows/kafka-server-start.bat
-index 315507e..956a097 100644
+index 6a5aa9f..3ae7152 100644
 --- a/bin/windows/kafka-server-start.bat
 +++ b/bin/windows/kafka-server-start.bat
-@@ -26,5 +26,5 @@ IF ["%KAFKA_LOG4J_OPTS%"] EQU [""] (
- IF ["%KAFKA_HEAP_OPTS%"] EQU [""] (
-     set KAFKA_HEAP_OPTS=-Xmx1G -Xms1G
- )
+@@ -22,5 +22,5 @@ IF [%1] EQU [] (
+ SetLocal
+ set KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:%~dp0../../config/log4j.properties
+ set KAFKA_HEAP_OPTS=-Xmx1G -Xms1G
 -%~dp0kafka-run-class.bat kafka.Kafka %*
 +%~dp0kafka-run-class.bat io.confluent.support.metrics.SupportedKafka %*
  EndLocal
