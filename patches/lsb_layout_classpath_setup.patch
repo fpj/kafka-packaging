@@ -1,8 +1,8 @@
 diff --git a/bin/kafka-run-class b/bin/kafka-run-class
-index 91e656b..a81ff61 100755
+index 15ba3ae..1eb8b33 100755
 --- a/bin/kafka-run-class
 +++ b/bin/kafka-run-class
-@@ -81,6 +81,9 @@ done
+@@ -86,6 +86,9 @@ done
  # classpath addition for release
  CLASSPATH=$CLASSPATH:$base_dir/libs/*
  
