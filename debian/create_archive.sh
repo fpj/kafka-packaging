@@ -96,6 +96,7 @@ ${INSTALL} -o root -g root ${TMP_ARCHIVE_PATH}/NOTICE* ${DESTDIR}${DOCPATH}/
 ln -s ./kafka_${SCALA_VERSION_SHORT}-${SOURCE_VERSION}.jar ${DESTDIR}${LIBPATH}/kafka.jar # symlink for unversioned access to jar
 
 ${INSTALL} -o root -g root ${TMP_ARCHIVE_PATH}/libs/kafka-clients-${SOURCE_VERSION}.jar ${DESTDIR}${LIBPATH}/
+${INSTALL} -o root -g root ${TMP_ARCHIVE_PATH}/libs/kafka-streams-${SOURCE_VERSION}.jar ${DESTDIR}${LIBPATH}/
 
 rm -rf ${TMP_ARCHIVE_PATH}
 
