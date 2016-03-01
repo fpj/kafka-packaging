@@ -740,10 +740,10 @@ index 4960836..0000000
 -exec $(dirname $0)/kafka-run-class.sh kafka.tools.ReplicaVerificationTool "$@"
 diff --git a/bin/kafka-run-class b/bin/kafka-run-class
 new file mode 100755
-index 0000000..91e656b
+index 0000000..15ba3ae
 --- /dev/null
 +++ b/bin/kafka-run-class
-@@ -0,0 +1,178 @@
+@@ -0,0 +1,183 @@
 +#!/bin/bash
 +# Licensed to the Apache Software Foundation (ASF) under one or more
 +# contributor license agreements.  See the NOTICE file distributed with
@@ -794,6 +794,11 @@ index 0000000..91e656b
 +done
 +
 +for file in $base_dir/streams/build/libs/kafka-streams*.jar;
++do
++  CLASSPATH=$CLASSPATH:$file
++done
++
++for file in $base_dir/streams/build/dependant-libs-${SCALA_VERSION}/rocksdb*.jar;
 +do
 +  CLASSPATH=$CLASSPATH:$file
 +done
@@ -924,10 +929,10 @@ index 0000000..91e656b
 +fi
 diff --git a/bin/kafka-run-class.sh b/bin/kafka-run-class.sh
 deleted file mode 100755
-index e818255..0000000
+index 61e8e6b..0000000
 --- a/bin/kafka-run-class.sh
 +++ /dev/null
-@@ -1,178 +0,0 @@
+@@ -1,183 +0,0 @@
 -#!/bin/bash
 -# Licensed to the Apache Software Foundation (ASF) under one or more
 -# contributor license agreements.  See the NOTICE file distributed with
@@ -982,6 +987,11 @@ index e818255..0000000
 -  CLASSPATH=$CLASSPATH:$file
 -done
 -	  
+-for file in $base_dir/streams/build/dependant-libs-${SCALA_VERSION}/rocksdb*.jar;
+-do
+-  CLASSPATH=$CLASSPATH:$file
+-done
+-
 -for file in $base_dir/streams/build/dependant-libs-${SCALA_VERSION}/rocksdb*.jar;
 -do
 -  CLASSPATH=$CLASSPATH:$file
