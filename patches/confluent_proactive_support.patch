@@ -1,8 +1,8 @@
 diff --git a/bin/kafka-server-start b/bin/kafka-server-start
-index 7ca2395..14b399d 100755
+index 36c2a0d..a135794 100755
 --- a/bin/kafka-server-start
 +++ b/bin/kafka-server-start
-@@ -50,4 +50,4 @@ case $COMMAND in
+@@ -41,4 +41,4 @@ case $COMMAND in
      ;;
  esac
  
@@ -19,13 +19,13 @@ index cd8160c..b4755c3 100755
 -ps ax | grep -i 'kafka\.Kafka' | grep java | grep -v grep | awk '{print $1}' | xargs kill -SIGTERM
 +ps ax | grep -i 'io\.confluent\.support\.metrics\.SupportedKafka' | grep java | grep -v grep | awk '{print $1}' | xargs kill -SIGTERM
 diff --git a/bin/windows/kafka-server-start.bat b/bin/windows/kafka-server-start.bat
-index ae56b48..aba999c 100644
+index 315507e..956a097 100644
 --- a/bin/windows/kafka-server-start.bat
 +++ b/bin/windows/kafka-server-start.bat
-@@ -26,5 +26,5 @@ if exists %~dp0../../etc/kafka/log4j.properties (
- 	set KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:%~dp0../../config/log4j.properties
+@@ -26,5 +26,5 @@ IF ["%KAFKA_LOG4J_OPTS%"] EQU [""] (
+ IF ["%KAFKA_HEAP_OPTS%"] EQU [""] (
+     set KAFKA_HEAP_OPTS=-Xmx1G -Xms1G
  )
- set KAFKA_HEAP_OPTS=-Xmx1G -Xms1G
 -%~dp0kafka-run-class.bat kafka.Kafka %*
 +%~dp0kafka-run-class.bat io.confluent.support.metrics.SupportedKafka %*
  EndLocal
