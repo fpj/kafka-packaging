@@ -24,3 +24,16 @@ index 74cbf90..3ae7169 100644
  # the port at which the clients will connect
  clientPort=2181
  # disable the per-ip limit on the number of connections since this is a non-production config
+diff --git a/streams/src/main/java/org/apache/kafka/streams/StreamsConfig.java b/streams/src/main/java/org/apache/kafka/streams/StreamsConfig.java
+index c4b8ffe..a2e8aba 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/StreamsConfig.java
++++ b/streams/src/main/java/org/apache/kafka/streams/StreamsConfig.java
+@@ -144,7 +144,7 @@ public class StreamsConfig extends AbstractConfig {
+                                         StreamsConfig.ZOOKEEPER_CONNECT_DOC)
+                                 .define(STATE_DIR_CONFIG,
+                                         Type.STRING,
+-                                        "/tmp/kafka-streams",
++                                        "/var/lib/kafka-streams",
+                                         Importance.MEDIUM,
+                                         STATE_DIR_DOC)
+                                 .define(REPLICATION_FACTOR_CONFIG,
